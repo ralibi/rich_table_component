@@ -16,6 +16,9 @@ Or install it yourself as:
 
     $ gem install rich_table_component
 
+Or put in your `gemfile`
+    gem 'rich_table_component'
+
 ## Usage
 
 
@@ -27,40 +30,41 @@ rich_table_component(relation = {}, _sort_column = {}, _sort_direction = nil, pa
 
 
 
-*relation (required)*
+**relation (required)**
+```
+value: ActiveRecord::Relation
+description:
+    ActiveRecord::Relation bukan array. 
+    Post, Post.where, User.posts adalah ActiveRecord::Relation
+    Post.all adalah Array, bukan ActiveRecord::Relation 
+```
 
-- value: ActiveRecord::Relation
-- description:
 
-
-
-*sort_column (optional)*
-
-- value: string
-- default: `created_at`
-- description:
-
+**sort_column (optional)**
+```
+value: string
+default: `created_at`
+description:
     default kolom sorting yang diinginkan saat pertama kali ditampilkan
+```
 
 
-
-*sort_direction (optional)*
-
-- value: string
-- default: 'DESC'
-- description:
-
+**sort_direction (optional)**
+```
+value: string
+default: 'DESC'
+description:
     mode urutan pada sorting dari kolom default/sort_column
+```
 
 
-
-*pagination (optional)*
-
-- value: boolean
-- default: true
-- description:
-
+**pagination (optional)**
+```
+value: boolean
+default: true
+description:
   Menyertakan fitur pagination jika true
+```
 
 contoh penggunaan pada controller:
 ```ruby
@@ -96,100 +100,95 @@ PARAMETER:
 
 
 
-*rtc_controller_name*
-
-- value: string
-- default: controller_name atau string dari controller yang menghandle request
-- description:
-
+**rtc_controller_name**
+```
+value: string
+default: controller_name atau string dari controller yang menghandle request
+description:
     Menentukan instance ActiveRecord::Relation yang ingin ditampilkan. Jika ingin menampilkan koleksi post melalui `PostsController#index`, maka default valuenya adalah 'posts'. Jika request bukan `controller#index` maka rtc_controller_name perlu dituliskan. Misalnya ingin menampilkan koleksi post pada halaman user pengupload atau `UsersController#show`, maka pada method `#show` perlu didefinisikan instance `@posts` dan parameter rtc_controller_name perlu dituliskan pada `render 'shared/rtc/component'` dengan value 'posts'.
-
-
-
-
-
-*rtc_partial*
-
-- value: string
-- default: rtc_controller_name.singularize (jika default, merender file partial pada directory yang memanggil)
-
-
-
-
-*rtc_title*
-
-- value: boolean, Hash{ title: 'Judul', wrapper: 'h1'/'h2'/'h3'/'h4' }, or string
-- default: true
-- description: 
-
-
-
-
-
-*rtc_header*
-
-- value: boolean
-- default: true
-- description:
-
-    Menampilkan kotak header tabel jika true, dan tidak ditampilkan jika false
-
-
-
-
-*rtc_column_header*
-
-- value: boolean
-- default: true
-- description:
-
-    Menampilkan kotak header kolom header jika true, dan tidak ditampilkan jika false
-
-
-
-
-*rtc_footer*
-
-- value: boolean
-- default: true
-- description:
-
-    Menampilkan kotak footer tabel jika true, dan tidak ditampilkan jika false
-
-
-
-
-*headers (required)*
-
-- value: Array of Object
-- description:
-    Mendefinisikan atribut/kolom yang akan ditampilkan sebagai kolom header, berupa atribut pada model atau asosiasi model
-- example: 
-```haml
-[:nip, :name, 'department', :nidn, :certification_number, 'user.email']
 ```
 
 
 
-*columns_width*
 
-- value: Array of Integer
-- default: [] / empty array
-- description:
+**rtc_partial**
+```
+value: string
+default: rtc_controller_name.singularize (jika default, merender file partial pada directory yang memanggil)
+description:
+    Partial per satu record atau per baris
+```
 
+
+**rtc_title**
+```
+value: boolean, Hash{ title: 'Judul', wrapper: 'h1'/'h2'/'h3'/'h4' }, or string
+default: true
+description: 
+    Judul dari RTC
+```
+
+
+
+
+**rtc_header**
+```
+value: boolean
+default: true
+description:
+    Menampilkan kotak header tabel jika true, dan tidak ditampilkan jika false
+```
+
+
+
+**rtc_column_header**
+```
+value: boolean
+default: true
+description:
+    Menampilkan kotak header kolom header jika true, dan tidak ditampilkan jika false
+```
+
+
+
+**rtc_footer**
+```
+value: boolean
+default: true
+description:
+    Menampilkan kotak footer tabel jika true, dan tidak ditampilkan jika false
+```
+
+
+
+**headers (required)**
+```
+value: Array of Object
+description:
+    Mendefinisikan atribut/kolom yang akan ditampilkan sebagai kolom header, berupa atribut pada model atau asosiasi model
+example: 
+  [:nip, :name, 'department', :nidn, :certification_number, 'user.email']
+```
+
+
+**columns_width**
+```
+value: Array of Integer
+default: [] / empty array
+description:
     Mengatur ukuran tiap kolom pada tabel. Nilai array merupakan rasio ukuran, misal: [1, 2, 2] berarti [20%, 40%, 40%]
+```
 
 
 
-
-*search_constraint*
-
-- value: symbol
-- default: nil
-- description:
-
+**search_constraint**
+```
+value: symbol
+default: nil
+description:
     Mendefinisikan pencarian yang disediakan untuk single search pada kanan atas. Menggunakan syntax ransack
-- example:
+```
+example:
 ```haml
 :title_or_body_or_author_name_or_author_address_street_cont
 ```
@@ -198,14 +197,14 @@ PARAMETER:
 
 
 
-*advanced_search_attributes*
-
-- value: Array of Object. Object can be string or symbol or hash {input: ..., params: simple_form input params}
-- default: nil
-- description:
-
+**advanced_search_attributes**
+```
+value: Array of Object. Object can be string or symbol or hash {input: ..., params: simple_form input params}
+default: nil
+description:
     Menampilkan element advanced search pada rtc
-- example:
+```
+example:
 ```haml
 advanced_search_attributes: [ :nidn, 
                               :name,
@@ -223,95 +222,90 @@ advanced_search_attributes: [ :nidn,
 
 
 
-*export_attributes*
-
-- value: Array of Object. Object can be string or symbol
-- default: nil,
-- description:
-
+**export_attributes**
+```
+value: Array of Object. Object can be string or symbol
+default: nil,
+description:
     Menyertakan fitur export pdf dan excel dengan menspesifikasikan attribut yang ingin di-sertakan
-- example:
+```
+example:
+```haml
   [:nip, :name, 'department', :nidn, :certification_number, 'user.email']
+```
 
 
 
-
-*add_form_remote*
-
-- value: boolean
-- default: false
-- description:
-
+**add_form_remote**
+```
+value: boolean
+default: false
+description:
     Menghidupkan form ajax pada button tambah jika true
+```
 
 
 
-
-*rtc_empty_data_message*
-
-- value: string
-- default: sanitize "Data #{t(rtc_controller_name)} kosong"
-- description:
-
+**rtc_empty_data_message**
+```
+value: string
+default: sanitize "Data #{t(rtc_controller_name)} kosong"
+description:
     Text yang ditampilkan pada tabel jika data kosong. text dapat dalam format html
+```
 
 
 
-
-*search_key*
-
-- value: string
-- default: 'q'
-- description:
-
+**search_key**
+```
+value: string
+default: 'q'
+description:
     Param key yang dibutuhkan pada fitur pencarian menggunakan gem ransack. Jika tidak menggunakan ransack, pada controller tidak perlu memiliki instance @q
+```
 
 
 
-
-*rtc_button_new*
-
-- value: boolean
-- default: true
-- description:
-
+**rtc_button_new**
+```
+value: boolean
+default: true
+description:
     Render default button new if true
+```
 
 
-
-*rtc_actions*
-
-- value: Element or Array of Element
-- default: nil
-- description:
-
+**rtc_actions**
+```
+value: Element or Array of Element
+default: nil
+description:
     Render element(s) side by side with button new
+```
 
 
 
-
-*toggle_view*
-
-- value: boolean
-- default: false
-- description:
+**toggle_view**
+```
+value: boolean
+default: false
+description:
     render toggle rtc view. thumbnail/list
+```
 
 
 
-
-*table_title*
-
-- value: string
-- default: controller_name
-- description:
-
+**table_title**
+```
+value: string
+default: controller_name
+description:
     Render table title
+```
 
 
-
-- rtc_selection_checkbox (To be developed)
-- recapitulation_matrix (removed from rtc component to dedicated component)
+rtc_selection_checkbox (To be developed)
+recapitulation_matrix (removed from rtc component to dedicated component)
 
 
 
@@ -478,8 +472,8 @@ end
 tambahkan class html '.edit' pada button custom
 pada method terakhir yang terpanggil sebelum baris terupdate, harus respond remote to :update, 
 dan harus memiliki params[:rtc_partial] yang diassign di controller ATAU dilempar dari form ATAU button edit 
-  - assign di controller:  params[:rtc_partial] = 'admin/departments/student'
-  - assign pada form (jika melewati modal form, seperti edit pada umumnya)
+- assign di controller:  params[:rtc_partial] = 'admin/departments/student'
+- assign pada form (jika melewati modal form, seperti edit pada umumnya)
 
 ```ruby  
 simple_form_for ... do |f|
