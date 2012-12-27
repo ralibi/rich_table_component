@@ -9,7 +9,7 @@
 - toggle_view = false if toggle_view.nil?
 - add_form_remote = true if add_form_remote.nil?
 - rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
-- rtc_button_new ||= nil
+- rtc_button_new = false if rtc_button_new.nil?
 - rtc_selection_checkbox ||= nil
 - advanced_search_attributes ||= nil
 - columns_width = columns_width.presence || []

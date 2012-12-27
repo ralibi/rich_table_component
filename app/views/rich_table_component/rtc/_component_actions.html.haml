@@ -3,13 +3,13 @@
 - the_klass = instance_variable_get("@#{rtc_controller_name}").klass
 - the_klass_name = the_klass.name
 - add_form_remote = true if add_form_remote.nil?
-- rtc_button_new ||= nil
+- rtc_button_new = false if rtc_button_new.nil?
 - export_attributes ||= nil
 - export_attribute_ids = []
 - rtc_actions ||= nil
 
 .rtc_actions
-  - if rtc_button_new.eql?(true) || rtc_button_new.eql?('true') || rtc_button_new.nil?
+  - if rtc_button_new.eql?(true) || rtc_button_new.eql?('true')
     - if rtc_controller_name != controller_name || instance_variable_get("@#{controller_name.singularize}").nil?
       = link_to icon('plus', 'Tambah ' + t("#{the_klass_name.tableize.singularize}").titleize).html_safe, 
         params.merge({controller: the_klass_name.tableize, action: 'new'}), 
