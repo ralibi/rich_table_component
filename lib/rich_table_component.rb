@@ -169,7 +169,7 @@ module RichTableComponent
       # -------------------------------
       def get_group_db(splitter, splitter_attr, splitter_time, group_attr, join_model, recapitulation_model)
         group_db = [splitter.last.try('tableize'), group_attr].compact.join('.')
-        group_db = (group_db.split('.').length > 1) ? group_db : [recapitulation_model.to_s.tableize, group_db].join('.')
+        group_db = (group_db.split('.').length > 1) ? group_db : [recapitulation_model.table_name, group_db].join('.')
 
         if splitter_time.present?
           case join_model.columns_hash[group_attr].type
