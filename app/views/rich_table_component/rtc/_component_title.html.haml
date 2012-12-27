@@ -1,0 +1,37 @@
+- rtc_controller_name ||= controller_name
+- rtc_title = true if rtc_title.nil?
+
+.component_title
+  - unless rtc_title.to_s.eql?('false') || rtc_title.to_s.eql?(false)
+    - if rtc_title.to_s.eql?('true') || rtc_title.to_s.eql?(true)
+      %h1 
+        - if rtc_title.present? && !rtc_title.to_s.eql?('true')
+          = rtc_title
+        - else
+          = sanitize(t("listing") + ' ' + t("#{rtc_controller_name.singularize}"))
+
+    - elsif rtc_title.instance_of?(Hash)
+      - if rtc_title[:wrapper].present?
+        - case rtc_title[:wrapper]
+        - when 'h1'
+          %h1
+            = rtc_title[:title]
+        - when 'h1'
+          %h2
+            = rtc_title[:title]
+        - when 'h1'
+          %h3
+            = rtc_title[:title]
+        - when 'h1'
+          %h4
+            = rtc_title[:title]
+        - when false
+          = rtc_title[:title]
+        - else
+          %h1
+            = rtc_title[:title]
+
+    - else
+      %h1
+        = rtc_title
+

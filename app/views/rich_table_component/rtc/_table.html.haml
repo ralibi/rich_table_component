@@ -1,0 +1,22 @@
+- rtc_controller_name ||= controller_name
+- rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
+- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
+
+- @controller_names = instance_variable_get("@#{rtc_controller_name}")
+
+%form#filter_form
+  - params.select{|key, val| key != "action" && key != "controller" && key.to_s != "q"}.each_pair do |key, val|
+    = hidden_field_tag key.to_s, val.to_s
+  
+%table
+  - if @controller_names.present?
+    - unless params[:list_view].eql? 'th'
+      = render partial: rtc_partial, collection: @controller_names
+    - else
+      %ul
+        = render partial: rtc_partial, collection: @controller_names
+  - else
+    .rtc_empty_message
+      %br
+      %center
+        %span.rtc_data_empty_text= rtc_empty_data_message

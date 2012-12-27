@@ -1,0 +1,29 @@
+
+$('.modal, .modal-backdrop').remove();
+$('.cke_skin_kama').remove();
+
+<% params[:remote] = true %>
+<% params[:form_partial] ||= "form" %>
+<% params[:form_title] ||= params[:modal_title].presence || "#{t('editing')} #{t(controller_name.singularize)}" %>
+
+var $modal = $('<%= j(render "modal_show", form_partial: params[:form_partial], form_title: params[:form_title]) %>');
+$modal.modal();
+$modal.on('shown', function(){
+
+  // Fix Rich Table Component
+  renderModalTableGrid();
+
+  // call jquery-file-upload
+  renderJqueryFileUpload();
+
+  // call ckeditor
+  renderRemoteCkeditor();
+
+  // call tokens
+  renderTokens();
+
+}).on('hidden', function(){
+  $('.showing_new_form').removeClass('showing_new_form');
+  $('.lvr_entry_edited').removeClass('lvr_entry_edited'); 
+  $('.modal, .modal-backdrop, .token-input-dropdown-bootstrap').remove();
+});

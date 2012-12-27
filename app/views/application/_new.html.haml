@@ -1,0 +1,11 @@
+.modal.fade
+  .modal-header
+    %button.close{'data-dismiss' => 'modal'}
+      &times;
+    %h3
+      = sanitize params[:form_title].presence || sanitize(params[:modal_title].presence) || "#{t('creating')} #{t(controller_name.singularize)}"
+  .modal-body
+    .component.form_component.new_form_component
+      .component_content
+        .part.form_part
+          = render 'form'

@@ -1,0 +1,15 @@
+<% rtc_controller_name = params[:rtc_controller_name].presence || controller_name %>
+<% controller_name_singular = rtc_controller_name.singularize %>
+<% @controller_name = instance_variable_get("@#{controller_name_singular}") %>
+
+var $new_item = $('<%= j(render :partial => params[:rtc_partial].presence || controller_name_singular, locals: {"#{(params[:rtc_partial].presence || controller_name_singular).split('/').last}".to_sym => @controller_name}) %>').st_formatRow().addClass('updated');
+$('.lvr_entry_edited').after($new_item).remove();
+$('.lvr_entry_edited').removeClass('lvr_entry_edited');
+
+$('.modal').modal('hide');
+
+showGlobalNotification('<%= flash[:notice] %>', {type: SUCCESS});
+
+
+<% flash[:error].try(:clear) %>
+<% flash[:notice].try(:clear) %>

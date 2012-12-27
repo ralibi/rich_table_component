@@ -1,0 +1,68 @@
+%h1.title
+  = t('recapitulation')
+- if @recapitulation_matrix.present?
+  - label_cols = @recapitulation_matrix.shift
+  %table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+    %tr
+      - label_cols.each_with_index do |label_col, i|
+        - if i == 0
+          %th.label
+            = label_col
+        - else
+          %th
+            = label_col
+    - @recapitulation_matrix.each do |row|
+      %tr
+        - row.each_with_index do |cell, i|
+          - if i == 0
+            %td.label
+              = strip_tags(cell.to_s)
+          - else
+            %td
+              = strip_tags(cell.to_s)
+
+%style{:type => "text/css"}
+  :css 
+    table{
+      border-collapse: collapse;
+      border: 0;
+      font-size: 10px;
+      color: #111;
+      margin: 0;
+    }
+    tr{
+      border: 0;
+      margin: 0;
+    }
+    th{
+      margin: 0;
+      padding: 7px 15px;  
+      font-weight: bold;
+      color: #111;
+      background: #F1F1F1; 
+      border: 1px solid #F0F0F0;
+      border-left: 0;
+      border_bottom: 2px solid #cecece;
+    }
+    th.label{
+      border-left: 1px solid #F0F0F0;
+    }
+    td{
+      margin: 0;
+      padding: 7px 10px; 
+      background: #F8F8F8;
+      border: 0;
+      border-bottom: 1px solid #F0F0F0;
+      border-right: 1px solid #F0F0F0;
+      color: #444;
+      text-align: center;
+    }
+    tr:nth-child(2n) td{ 
+      background: #fff;
+    }
+    td.label{ 
+      text-align :left;
+      font-weight: bold;
+      color: #111;
+      border-left: 1px solid #F0F0F0;
+    }

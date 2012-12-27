@@ -1,0 +1,5 @@
+showGlobalNotification('<%= t("devise.failure.timeout") %>', {type: ERROR});
+removeGlobalNotification();
+
+<% flash[:error].try(:clear) %>
+<% flash[:notice].try(:clear) %>

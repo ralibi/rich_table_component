@@ -1,0 +1,19 @@
+<% rtc_controller_name = params[:rtc_controller_name].presence || controller_name %>
+<% controller_name_singular = rtc_controller_name.singularize %>
+<% @controller_name = instance_variable_get("@#{controller_name_singular}") %>
+
+var $new_item = $('<%= j(render :partial => params[:rtc_partial].presence || controller_name_singular, locals: {"#{controller_name_singular}".to_sym => @controller_name}) %>').st_formatRow().addClass('created');
+
+var $rtc = $('.rich_table_component.showing_new_form');
+$rtc.removeClass('showing_new_form');
+$rtc.find('.resizers').after($new_item);
+
+$rtc.find('.showing_new_form').removeClass('showing_new_form');
+$rtc.find('.lvr_entry_edited').removeClass('lvr_entry_edited');
+$rtc.find('.rtc_empty_message').remove();
+
+$('.modal').modal('hide');
+
+
+<% flash[:error].try(:clear) %>
+<% flash[:notice].try(:clear) %>

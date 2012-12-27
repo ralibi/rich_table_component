@@ -1,0 +1,25 @@
+- rtc_controller_name ||= controller_name
+- recapitulation_matrix ||= nil
+- advanced_search_attributes ||= nil
+
+- items = []
+- recapitulation_matrix.each do |item|
+  - case item
+  - when Hash
+    - label = t(item[:label])
+    - value = item[:value]
+  - else
+    - label_splitter = item.split('__').first.split('.')
+    - label = label_splitter.pop
+    - label = t([label_splitter, label].compact.join('_'))
+    - value = item
+  - items << [value, label]
+
+
+
+.well
+
+  = render "rich_table_component/rtc/recapitulation_matrix_form",  
+    recapitulation_model: instance_variable_get("@#{rtc_controller_name}").klass.name,
+    items: items,
+    advanced_search_attributes: advanced_search_attributes.presence || nil

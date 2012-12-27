@@ -1,0 +1,69 @@
+- rtc_controller_name ||= controller_name
+- rtc_title = true if rtc_title.nil?
+- the_klass = instance_variable_get("@#{rtc_controller_name}").klass
+- the_klass_name = the_klass.name
+- add_form_remote = true if add_form_remote.nil?
+- rtc_button_new ||= nil
+- export_attributes ||= nil
+- export_attribute_ids = []
+- rtc_actions ||= nil
+
+.rtc_actions
+  - if rtc_button_new.eql?(true) || rtc_button_new.eql?('true') || rtc_button_new.nil?
+    - if rtc_controller_name != controller_name || instance_variable_get("@#{controller_name.singularize}").nil?
+      = link_to icon('plus', 'Tambah ' + t("#{the_klass_name.tableize.singularize}").titleize).html_safe, 
+        params.merge({controller: the_klass_name.tableize, action: 'new'}), 
+        remote: add_form_remote ? true : false,
+        class: 'btn btn-mini btn-success btn_new' if can?(:create, the_klass)
+    - else
+      = link_to icon('plus', 'Tambah ' + t("#{rtc_controller_name.singularize}").titleize).html_safe, 
+        params.merge({controller: rtc_controller_name, action: 'new', "#{controller_name.singularize}_id".to_sym => instance_variable_get("@#{controller_name.singularize}").id }), 
+        remote: add_form_remote ? true : false,
+        class: 'btn btn-mini btn-success btn_new' if can?(:create, rtc_controller_name.classify.constantize)
+
+
+
+
+
+  - if rtc_actions.present?
+    - rtc_actions = [rtc_actions].flatten
+    - rtc_actions.each do |rtc_action|
+      = rtc_action
+          
+          
+
+
+
+
+
+  - if export_attributes.present?
+    = (link_to (t('xls')).html_safe, '#', class: 'btn btn-mini btn_export btn_xls')
+    = (link_to (t('pdf')).html_safe, '#', class: 'btn btn-mini btn_export btn_pdf')
+
+    .hide
+      - new_params = Hash.new
+      - new_params.merge! params
+      - new_params[:controller] ||= the_klass_name.tableize
+      - new_params[:format] = 'xls'
+      - path = url_for(new_params)
+      %form{"accept-charset" => "UTF-8", action: path, method: :get, class: 'simple_form form-horizontal export_form'}
+        = hidden_field_tag 'rtc_controller_name', the_klass_name.tableize
+        = hidden_field_tag 'pgos', true unless action_name.eql? 'index'
+        .control-group.check_boxes.optional
+          .check_boxes.optional.control-label
+            = t("data")
+          - export_attributes.each do |ea|
+            - if ea.instance_of?(Hash)
+              attribute = ea.keys.first.to_s
+            - else
+              - attribute = ea.to_s
+              - splitter = attribute.split('.')
+            - splitter = attribute.split('.')
+            - attribute_name = t((splitter.last(2) - ['to_s']).join('_').presence || the_klass_name.underscore)
+            .controls
+              %label.checkbox
+                = check_box_tag 'export_attribute_ids[]', ea, true
+                = t(attribute_name)
+        .form-actions
+          %button{type: 'submit', class: "btn btn btn-large btn-primary btn_submit"}
+            = t("export")

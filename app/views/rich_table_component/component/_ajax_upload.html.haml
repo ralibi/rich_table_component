@@ -1,0 +1,6 @@
+.document_upload
+  = form_for document, :html => { :class => "document btn btn-large", :multipart => true } do |f|
+    = f.file_field :attachment
+    %div
+      %i{class: "icon-plus"}
+        = t('upload_file')

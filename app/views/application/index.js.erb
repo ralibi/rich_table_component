@@ -1,0 +1,7 @@
+var $elmt = $('.updating.rich_table_component');
+$elmt.find('.rtc_grid').html("<%= j(render "rich_table_component/rtc/table", rtc_controller_name: params[:rtc_controller_name].presence || controller_name, rtc_partial: params[:rtc_partial].presence || nil) %>");
+$elmt.st_tableGrid_update();
+<% if params[:page].present? || params[:per_page].present? %>
+  $elmt.find('.pagination_area').html("<%= j(render "rich_table_component/pagination", rtc_controller_name: params[:rtc_controller_name].presence || controller_name ) %>");
+<% end %>
+$('.rich_table_component.updating').removeClass('updating');

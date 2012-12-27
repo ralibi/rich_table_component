@@ -1,0 +1,20 @@
+.nested_field
+  - if f.object.new_record?
+    = f.input :document_type, as: :hidden, input_html: { value: controller_name.singularize }
+    = #f.input :name
+    = f.input :attachment
+  - else
+    .controls
+      .attachment_part
+        .attachment_entry
+          .attachment_entry_content
+            .attachment_entry_image      
+              = link_to document_image_tag(f.object), download_document_path(f.object)
+            .attachment_entry_description
+              .file_name_part
+                = link_to f.object.attachment_file_name, download_document_path(f.object)
+              .file_size_part
+                = number_to_human_size f.object.attachment_file_size
+
+
+  = link_to_remove_fields t("remove"), f

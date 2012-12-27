@@ -1,0 +1,33 @@
+$notification_background_color: #fc0
+$error_background_color: #c00
+$success_background_color: #06c
+$notification_color: #000
+$error_color: #fff
+$success_color: #fff
+
+@mixin foreback_color($fore, $back)
+  color: $fore
+  background-color: $back
+
+.notification_component.page_notification,
+.global_loading
+  +fixed_ct(720)
+  text-align: center
+  z-index: 10000
+  padding: 0
+  background-color: transparent !important
+  border: solid 0px !important
+  .component_content,
+  .global_loading_message
+    font-size: $main_font_size * 0.85
+    padding: 5px 20px
+    margin: 0 auto
+    display: inline-block
+    +foreback_color($notification_color, $notification_background_color)
+  &.notice
+    .component_content
+      +foreback_color($success_color, $success_background_color)
+  &.alert
+    .component_content
+      +foreback_color($error_color, $error_background_color)
+      

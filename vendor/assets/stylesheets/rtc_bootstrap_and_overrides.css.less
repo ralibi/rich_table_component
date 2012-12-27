@@ -1,0 +1,315 @@
+@import "twitter/bootstrap/bootstrap";
+@fontAwesomeEotPath_iefix: asset-path("fontawesome-webfont.eot#iefix");
+body { padding-top: 60px; }
+
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
+@iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+// Note: If you use asset_path() here, your compiled boostrap_and_overrides.css will not 
+//       have the proper paths. So for now we use the absolute path.
+@fontAwesomeEotPath: '/assets/fontawesome-webfont.eot';
+@fontAwesomeWoffPath: '/assets/fontawesome-webfont.woff';
+@fontAwesomeTtfPath: '/assets/fontawesome-webfont.ttf';
+@fontAwesomeSvgPath: '/assets/fontawesome-webfont.svg';
+
+// Font Awesome
+@import "fontawesome";
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/less.html for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+
+
+@linkColor: #ff9900;
+@btnPrimaryBackground: #08c;
+@baseFontSize: 12px;
+@baseLineHeight: 15px;
+
+.pagination{
+  margin: 0px;
+  a, span{
+    .btn;
+    .btn-mini;
+  }
+  > a.disabled, > span.disabled{
+    .btn.disabled;
+  }
+
+}
+
+.thumbnail{
+  .caption{
+    padding: 4px;
+  }
+}
+
+.nav-list{
+  > li > ul {
+    padding-left:0;
+    padding-right:0;
+  }
+
+  ul > li > a {
+    padding-left:30px;
+  }
+}
+
+.navbar .btn {
+  display: inline-block;
+  line-height: 18px;
+  margin: 5px 5px 6px;
+  padding: 4px 10px;
+}
+
+.btn.btn-mini{
+  i{
+    font-size: 14px;
+    line-height: 11px;
+    position: relative;
+    top: 1px;
+  }
+  font-size: 11px;
+  line-height: 12px;
+  padding: 2px 6px;
+}
+
+.dropdown-menu a{
+  font-size: 11px;
+  padding: 1px 15px;
+}
+
+.breadcrumb li li{
+  text-shadow: none;
+}
+
+.form-horizontal{
+  fieldset {
+    margin-bottom: 15px;
+    legend {
+      font-weight: bold;
+      font-size: 14px;
+      border-bottom: solid 1px #DDD;
+      padding-left: 10px;
+
+      + .nested_field {
+        margin-top: 15px;
+      }
+    }
+
+  }
+
+  .controls{
+    .time{
+      width: 50px;
+    }
+    input, textarea{
+      width: 260px;
+    }
+    select{
+      width: 272px;
+    }
+  }
+  .help-block{
+    font-size: 9px;
+    margin-top: 3px;
+  }
+  .range_input{
+    .control-group:first-child {
+      float: left;
+    }
+    .control-group:last-child {
+      label{
+        width: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .controls {
+        overflow: hidden;
+      }
+      margin-bottom: 0px;
+    }
+    input{
+      width: 100px;
+    }
+  }
+}
+
+.modal{
+  width: auto;
+  min-width: 768px;
+  max-width: 768px;
+  margin-left: -384px !important;
+
+  .component .component_content {
+    .part.form_part {
+      border-top: 0px solid #DDDDDD;
+      padding-top: 0px;
+    }
+  }
+
+  .form-horizontal{
+    .form-actions{
+      background-color: none;
+      margin-bottom: 0px;
+    }
+
+    label, input, button, select, textarea {
+      line-height: 13px;
+    }
+
+    .control-group{
+      margin-bottom: 13px;
+    }
+  }
+}
+
+.token-input-dropdown-bootstrap{
+  z-index: 110001 !important;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+
+
+
+
+
+
+
+
+.uneditable-input.input-xlarge{
+  min-width: 270px;
+  min-height: 18px;
+  width: auto;
+  height: auto;
+  white-space: normal; 
+}
+
+
+#sidebar_area .well{
+  padding: 8px 0px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ul.token-input-list-bootstrap {
+  .uneditable-input;
+  width: 320px;
+  cursor: text; 
+  overflow: hidden; 
+  height: auto !important; 
+  margin: 0;
+  list-style-type: none;
+  border: 1px solid @inputBorder;
+}
+
+// Focus mimick
+ul.token-input-list-bootstrap {
+  .box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+  @transition: border linear .2s, box-shadow linear .2s;
+  .transition(@transition);
+}
+
+ul.token-input-list-bootstrap.token-input-focused-bootstrap {
+  border-color: rgba(82,168,236,.8);
+  @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+  .box-shadow(@shadow);
+  outline: 0;
+  outline: thin dotted \9; /* IE6-9 */
+}
+
+ul.token-input-list-bootstrap li {
+  /*float: left;*/
+}
+
+ul.token-input-list-bootstrap li p {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+ul.token-input-list-bootstrap li.token-input-token-bootstrap {
+  .uneditable-input;
+  width: auto;
+  // .buttonBackground(@grayLighter, lighten(@grayLighter, 5%));
+  margin: 0px 0px 3px 0px;
+  cursor: pointer;
+  display: block;
+}
+
+ul.token-input-list-bootstrap li.token-input-token-bootstrap span.token-input-delete-token-bootstrap {
+  .close;
+  margin-left: 5px;
+  margin-top: -20px;
+}
+
+ul.token-input-list-bootstrap li.token-input-token-bootstrap.token-input-selected-token-bootstrap {
+  .buttonBackground(@btnPrimaryBackground, spin(@btnPrimaryBackground, 20));
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+}
+
+ul.token-input-list-bootstrap li input {
+  display: inline;
+  border: 0;
+  background: none;
+  -webkit-appearance: caret;
+  padding: 0;
+}
+
+div.token-input-dropdown-bootstrap {
+  .dropdown-menu;
+  .typeahead;
+}
+
+div.token-input-dropdown-bootstrap ul {
+  margin: 0;
+  padding: 0;
+}
+
+div.token-input-dropdown-bootstrap p {
+  margin: 0;
+  padding: 5px;
+  color: @grayLight;
+}
+
+div.token-input-dropdown-bootstrap ul li {
+  list-style-type: none;
+  display: block;
+  padding: 3px 15px;
+  clear: both;
+  font-weight: normal;
+  line-height: @baseLineHeight;
+  color: @dropdownLinkColor;
+  white-space: nowrap;
+}
+
+div.token-input-dropdown-bootstrap ul li.token-input-selected-dropdown-item-bootstrap {
+  color: @dropdownLinkColorHover;
+  background-color: @dropdownLinkBackgroundHover;
+  cursor: pointer;
+}

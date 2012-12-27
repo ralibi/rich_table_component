@@ -1,0 +1,41 @@
+!!! XML
+%Workbook{:xmlns => "urn:schemas-microsoft-com:office:spreadsheet", "xmlns:html" => "http://www.w3.org/TR/REC-html40", "xmlns:o" => "urn:schemas-microsoft-com:office:office", "xmlns:ss" => "urn:schemas-microsoft-com:office:spreadsheet", "xmlns:x" => "urn:schemas-microsoft-com:office:excel"}
+  %Styles
+    %Style{"ss:ID" => "Title"}
+      %Alignment{"ss:Horizontal" => "Center", "ss:Vertical" => "Bottom"}
+      %Font{"ss:Bold" => "1", "ss:Size" => "16"}
+    %Style{"ss:ID" => "Header"}
+      %Alignment{"ss:Horizontal" => "Center", "ss:Vertical" => "Bottom"}
+      %Borders
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Left", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Top", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Right", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Bottom", "ss:Weight" => "1"}
+      %Font{"ss:Bold" => "1", "ss:Color" => "#333333", "ss:Size" => "11"}
+      %Interior{"ss:Color" => "#DDDDDD", "ss:Pattern" => "Solid"}
+    %Style{"ss:ID" => "Content"}
+      %Borders
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Left", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Right", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Bottom", "ss:Weight" => "1"}
+      %Font{"ss:Color" => "#333333", "ss:Size" => "11"}
+  %Worksheet{"ss:Name" => "Sheet1"}
+    %Table
+      - if @recapitulation_matrix.present?
+        - label_cols = @recapitulation_matrix.shift
+        %Row
+          - label_cols.each do |label_col|
+            %Cell{"ss:StyleID" => "Header"}
+              - if label_col.present?
+                %Data{"ss:Type" => "String"}= label_col
+        - @recapitulation_matrix.each do |row|
+          %Row
+            - row.each_with_index do |cell, i|
+              - if i == 0
+                %Cell{"ss:StyleID" => "Content"}
+                  %Data{"ss:Type" => "String"}= strip_tags(cell.to_s)
+              - else
+                %Cell{"ss:StyleID" => "Content"}
+                  %Data{"ss:Type" => "Number"}= strip_tags(cell.to_s)
+
+

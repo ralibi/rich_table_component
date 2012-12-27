@@ -1,0 +1,5 @@
+.component.tabbed_component
+  .tabs
+    - tabs.each do |tab|
+      %a{href: tab[:url], title: tab[:name], class: ( (tab[:url].eql?(request.original_fullpath) || tab[:url].eql?(request.url)) || tab[:url].eql?(request.fullpath) ) || (tab[:default].present? && !tabs.map{|m| m[:url]}.include?(request.original_fullpath) && !tabs.map{|m| m[:url]}.include?(request.uri) ) ? 'current_tab' : ''}
+        = tab[:name]

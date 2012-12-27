@@ -1,0 +1,87 @@
+- rtc_controller_name = params[:rtc_controller_name].presence || controller_name
+- rtc_class_name = rtc_controller_name.classify if rtc_class_name.nil?
+
+- @rtc_controller_name = instance_variable_get("@#{rtc_controller_name}")
+
+%h2= "Tabel " + t(rtc_controller_name.classify.underscore)
+%table{:border => "0", :cellpadding => "0", :cellspacing => "0"}
+  %tr
+    - puts params[:export_attribute_ids]
+    - params[:export_attribute_ids].each do |att|
+      - attribute = att.to_s
+      %th
+        .cell= t((attribute.split('.').last(2) - ['to_s']).join('_').presence || @rtc_controller_name.klass.name.underscore)
+  - @rtc_controller_name.each do |rtc|
+    %tr
+      - params[:export_attribute_ids].each do |att|
+        - attribute = att.to_s
+        - splitter = attribute.split('.')
+        - splitter.unshift(rtc)
+        - val = splitter.inject do |ret, n| 
+          - if ret.respond_to? :collect
+            - ret.collect(&(n.to_sym))
+          - else
+            - ret.try(n)
+        - val = val.join(', ') if val.instance_of? Array
+
+        - case val.class.to_s
+        - when 'String'
+          - cell_type = "String"
+        - when 'Fixnum'
+          - cell_type = "Number"
+        - when 'ActiveSupport::TimeWithZone'
+          - cell_type = "String"
+        - when 'Date'
+          - cell_type = "String"
+        - when 'NilClass'
+          - cell_type = nil
+        - else
+          - cell_type = "String"
+        - if cell_type == nil
+          %td{"ss:StyleID" => "Content"}
+        - else
+          %td{class: "#{cell_type.underscore}"}
+            .cell= strip_tags(val.to_s)
+
+%style{:type => "text/css"}
+  :css 
+    table{
+      border-collapse: collapse;
+      border: 0;
+      font-size: 10px;
+      font-family: arial, tahoma, verdana, sans-serif;
+      color: #111;
+      margin: 0;
+    }
+    tr{
+      border: 0;
+      margin: 0;
+    }
+    th{
+      margin: 0;
+      padding: 7px 15px;  
+      font-weight: bold;
+      color: #111;
+      background: #F1F1F1; 
+      border: 1px solid #F0F0F0;
+      border-left: 0;
+    }
+    th:nth-child(1){
+      border-left: 1px solid #F0F0F0;
+    }
+    td{
+      margin: 0;
+      padding: 7px 10px; 
+      background: #F8F8F8;
+      border: 0;
+      border-bottom: 1px solid #F0F0F0;
+      border-right: 1px solid #F0F0F0;
+      color: #444;
+      text-align: center;
+    }
+    tr:nth-child(2n) td{ 
+      background: #fff;
+    }
+    td:nth-child(1){
+      border-left: 1px solid #F0F0F0;
+    }

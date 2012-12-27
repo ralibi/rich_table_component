@@ -1,0 +1,12 @@
+<% if @recapitulation_error.present? %>
+  recapitulation_error = <%=raw @recapitulation_error %>;
+  recapitulation_matrix = null;
+<% else %>
+  recapitulation_error = null;
+  <% if @recapitulation_matrix.present? %>
+    recapitulation_matrix = <%=raw @recapitulation_matrix %>;
+  <% else %>
+    recapitulation_error = {message: 'Tidak ada data, silakan ulangi pencarian'};
+  <% end %>
+<% end %>
+

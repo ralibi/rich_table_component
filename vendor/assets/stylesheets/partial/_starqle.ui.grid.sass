@@ -1,0 +1,495 @@
+$table_background_color: mix($theme_color, white, 10%)
+
+$table_gradient_color_top: mix($theme_color, white, 8%)
+$table_gradient_color_middle: mix($theme_color, white, 12%)
+$table_gradient_color_bottom: mix($theme_color, white, 15%)
+
+$table_border_color: $theme_border_box_shadow_color
+
+$separator_border_left: $table_border_color
+$separator_border_right: transparentize(white, 0.1)
+
+
+.rich_table_component
+
+  .rtc_actions
+    margin-bottom: 5px
+    text-align: right
+  .component_content
+    overflow: hidden
+    margin: 0px
+    margin-bottom: 20px
+    +background-image(linear-gradient(lighten($table_background_color, 10), $table_background_color 30px))
+    +box-shadow(0 0 0 1px $table_border_color inset)
+
+    table,
+    tr,
+    th,
+    td
+      border-width: 0px
+      border-spacing: 0px
+      padding: 0px
+      vertical-align: top
+
+    td
+      background-color: $bright_color
+
+
+    // RTC HEADER ====================================================================================
+    .rtc_header
+      clear: both
+      margin: 1px 1px 0
+      vertical-align: top
+      padding: 4px 10px
+      overflow: hidden
+      +box-shadow(0 -1px 0 0 $table_border_color inset)
+      +border-radius(4px 4px 0 0)
+
+      .rtc_title
+        float: left
+        padding-right: 5px
+        line-height: 160%
+        font-size: 12px
+        font-weight: bold
+        +punched-text(#777)
+
+      .rtc_search
+        input[type=text]
+          margin-bottom: 0px
+
+      .rtc_header_expanded
+        display: none
+        clear: both
+        border: 1px solid $table_border_color
+        margin: 25px 0px 0px
+        padding: 20px 0px 0px
+        background-color: white
+        .rtc_advanced_search
+          &.form-horizontal .control-group
+            margin-bottom: 10px
+          select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input
+            padding: 3px 3px 2px
+          label
+            padding-top: 2px
+          .help-block
+            font-size: 8px
+            margin-top: 3px
+          .range
+            input[type=text]
+              width: 80px
+            .controls
+              overflow: hidden
+              width: 90px
+              float: left
+              margin-left: 20px
+              p
+                float: left
+                width: 80px
+            .floating
+              margin-left: 9px
+              float: left
+          .form-actions
+            margin-bottom: 0px
+
+
+        .ttablock
+          padding-top: 10px
+
+        .hide_ttadvance
+          font-size: 10px
+          font-weight: normal
+          cursor: pointer
+          color: #4697DF
+          padding: 2px 5px
+          &:hover
+            +border-radius(3px)
+            +box-shadow(0 0 0 1px #CCCCCC inset)
+
+
+    // RTC CONTENT ====================================================================================
+    .rtc_content
+      .rtc_grid_header
+        clear: both
+        overflow: hidden
+        +background-image(linear-gradient(#FFFFFF, $table_gradient_color_top))
+        +box-shadow(0 -1px 0 0 $table_border_color inset)
+        margin: 0px 1px
+
+        .rtc_gh_items
+          overflow: hidden
+          position: relative
+
+          .rtc_gh_item
+            float: left
+            cursor: pointer
+            +box-shadow(-1px 0 0 0 transparentize(black, 0.8) inset)
+            +user-select(none)
+
+            a
+              color: transparentize(black, 0.2)
+              text-shadow: 1px 1px #FFFFFF
+              font-size: 11px
+              line-height: 100%
+              font-weight: bold
+              text-decoration: none
+              &:active
+                color: transparentize(black, 0.1)
+
+            a:hover
+              color: transparentize(black, 0.2)
+
+            > a,
+            > span
+              position: relative
+              left: -4px
+              padding: 3px 0
+              margin: 0px 8px
+              overflow: hidden
+              display: block
+              white-space: nowrap
+
+              &.asc:after
+                content: " \25B2"
+              &.desc:after
+                content: " \25BC"
+
+            > span
+              color: transparentize(black, 0.2)
+              text-shadow: 1px 1px #FFFFFF
+              font-size: 11px
+              font-weight: bold
+              text-decoration: none
+
+            &:hover
+              +background-image(linear-gradient($table_gradient_color_top, mix(black, $table_gradient_color_bottom, 5%)))
+
+            &:active
+              +background-image(linear-gradient(mix(black, $table_gradient_color_bottom, 10%), mix(black, $table_gradient_color_bottom, 2%)))
+
+      .rtc_grid
+        clear: both
+        margin: 0px 1px
+        background-color: #FFFFFF
+        position: relative
+        overflow-y: auto
+        border-bottom: 1px solid $table_border_color
+
+        .resizer
+          height: 0px
+
+        table
+          width: 100%
+          table-layout: fixed
+
+          tr > td
+            border-bottom: 1px solid darken(mix($theme_color, $bright_color, 3%), 3%)
+            +transition-property(background-color)
+            +transition-duration(0.4s)
+
+          tr:nth-child(odd) td
+            background-color: mix($theme_color, $bright_color, 3%)
+          
+          tr:hover > td
+            background-color: mix($theme_color, $bright_color, 6%)
+
+          tr.created > td
+            background-color: #DFF0D8
+
+          tr.updated > td
+            background-color: #D9EDF7
+
+          tr.deleted > td
+            background-color: #DDDDDD
+
+          tr.sup_header > td
+            font-size: $font_size - 2
+            font-weight: bold
+            border-bottom: 1px solid darken($bright_color, 10%)
+            +background-image(linear-gradient(darken($bright_color, 3%), darken($bright_color, 6%)))
+            .cell
+              padding: 2px 5px
+              white-space: normal
+              line-height: 200%
+          tr.sup_header.new > td
+            +background-image(linear-gradient(darken(#CCDDEE, 3%), darken(#CCDDEE, 6%)))
+            border-bottom: 1px solid darken(#CCDDEE, 10%)
+
+          tr.list_view_row
+            .lvr_entry
+              .lvr_entry_content
+                overflow: hidden
+                font-size: $main_font_size * 0.9
+                .nim_part
+                  font-weight: normal
+                .lvr_entry_main_content
+                  font-weight: bold
+                  float: left
+                  a
+                    color: $dark_color
+                .lvr_entry_additional_content
+                  .part_label
+                    margin-right: 5px
+                    font-size: $main_font_size * 0.8
+                    font-weight: bold
+                    &:after
+                      content: ':'
+                  float: right
+              .lvr_entry_description
+                white-space: normal
+                p
+                  font-size: $main_font_size * 0.9
+                  line-height: $main_font_size * 0.9 * 1.4
+                  padding: ($main_font_size * 0.25) 0px
+              .lvr_entry_meta
+                overflow: hidden
+                .part
+                  float: left
+                  margin-right: 10px
+                  font-size: $main_font_size * 0.8
+                  color: $thin_color
+
+                  .part_label
+                    margin-right: 5px
+                    font-weight: bold
+                    &:after
+                      content: ':'
+                  .part_value
+                    > i
+                      color: darken($thin_color, 30%)
+
+                .right_part
+                  float: right
+                  margin-right: 0px
+                  margin-left: 10px
+                
+                .created_at_part
+                .status_part
+                  &.proposed
+                  &.approved
+                    color: $green_notice_color
+                  &.rejected
+                    color: $red_notice_color
+                .total_progress_part
+                  &.zero_progress
+                    //color: $red_notice_color
+                .total_final_project_part
+                .total_comment_part
+
+
+              .lvr_entry_action
+                text-align: right
+                .btn-group
+                  margin-bottom: -6px
+                  display: inline-block
+              .lvr_entry_thumbnail
+                float: left
+                margin-left: -45px
+                margin-top: 4px
+                a
+                  display: inline-block
+              &.lvr_entry_with_thumbnail
+                margin-left: 45px
+                
+                
+                  
+
+          .cell
+            position: relative
+            padding: 2px 5px
+            overflow: hidden
+            white-space: nowrap
+            font-size: 11px
+            line-height: 150%
+
+            > .part
+              font-size: $main_font_size * 0.8
+
+              .part_label
+                margin-right: 5px
+                font-weight: bold
+                &:after
+                  content: ':'
+              .part_value
+                > i
+                  color: darken($thin_color, 30%)
+
+            .edit, .delete
+              padding: 2px 6px
+            .edit[not='btn']
+            .delete[not='btn']
+
+            .rtc_inner_table
+              background-color: white
+              table
+                margin-top: 5px
+                margin-bottom: 5px
+                +box-shadow(0 0 1px 0px rgba(0, 0, 0, 0.2))
+                tr > td
+                  background-color: white
+                tr:nth-child(odd) > td
+                  background-color: mix($theme_color, $bright_color, 3%)
+                
+                tr:hover > td
+                  background-color: mix($theme_color, $bright_color, 6%)
+
+
+        $lvr_thumbnail_width: 116px
+        ul
+          margin-left: 10px
+          li.lvr_thumbnail
+            float: left
+            width: $lvr_thumbnail_width
+            margin: 10px
+
+            a.lvr_entry_thumbnail
+              img
+                width: $lvr_thumbnail_width - 8
+                height: $lvr_thumbnail_width - 8
+
+            .caption
+              .caption_part
+                line-height: 130%
+                &.nowrap_part
+                  white-space: nowrap
+                  overflow: hidden
+                  text-overflow: ellipsis
+
+                .part
+                  float: left
+                  margin-right: 10px
+                  font-size: $main_font_size * 0.8
+                  color: $thin_color
+                  max-width: $lvr_thumbnail_width - 8 - 15
+                  overflow: hidden
+                  text-overflow: ellipsis
+
+                  .part_label
+                    margin-right: 5px
+                    font-weight: bold
+                    &:after
+                      content: ':'
+                  .part_value
+                    i
+                      color: darken($thin_color, 30%)
+
+        .rtc_loading
+          position: absolute
+          left: 0
+          text-align: center
+          background-color: rgba(255, 255, 255, 0.8)
+
+          .loading_message
+            margin: 0 auto
+            background-color: #FFFBCC
+            padding: 2px 10px 4px
+            font-weight: bold
+            display: inline-block
+            +border-radius(0 0 3px 3px)
+            +box-shadow(inset 0 2px 2px -2px rgba(0, 0, 0, 0.3))
+            
+        .rtc_data_empty_text
+          color: lighten(black, 60%)
+          font-size: 12px
+
+
+
+
+    // RTC FOOTER ====================================================================================
+    .rtc_footer
+      clear: both
+      margin: 0 1px 1px
+      padding: 6px 10px 8px
+      overflow: hidden
+      +border-radius(0 0 $border_radius $border_radius)
+
+      .pagination_area
+        overflow: hidden
+        float: left
+
+      .pagination
+        overflow: hidden
+        float: left
+        padding-top: 1px
+        padding-right: 7px
+
+        > div, > a, > span
+          float: left
+          margin-right: 3px
+
+        .per_page_part,
+        .go_to_page_part,
+        .current_page_part
+          +punched-text
+          font-size: 11px
+          vertical-align: middle
+          line-height: 21px
+
+        .current_page_part
+          padding: 0 3px
+
+        .per_page_part
+          margin-right: 15px
+          select
+            margin-top: -1px
+            height: 23px
+            padding: 1px 2px
+            width: 50px
+            text-align: right
+            margin-right: 3px
+        .go_to_page_part
+          div
+            float: left
+          input
+            width: 40px
+            text-align: right
+            margin-bottom: 0px
+            height: 18px
+            padding: 0px 4px
+          a
+            float: none
+
+
+      .page_entries_info
+        padding-top: 1px
+        float: left
+        margin-right: 3px
+        +punched-text
+        font-size: 11px
+        vertical-align: middle
+        line-height: 21px
+
+
+
+
+    .rtc_item
+      &.right
+        float: right
+
+      &.left
+        float: left
+
+
+    .rtc_item_separator
+      +rect(0, 20)
+      display: inline-block
+      border-right: 1px solid $separator_border_right
+      border-left: 1px solid $separator_border_left
+
+      &.left
+        margin-right: 5px
+        float: left
+
+      &.right
+        margin: 0px 5px
+        float: right
+
+
+.vertical_line
+  position: absolute
+  width: 1px
+  display: block
+  background-color: #000000
+
+
+.numeric
+  text-align: right

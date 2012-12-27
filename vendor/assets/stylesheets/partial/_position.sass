@@ -1,0 +1,122 @@
+
+
+@mixin fixed_position
+  position: fixed
+  left: 50%
+  margin-left: -480px
+
+
+@mixin fixed_ct($width, $top: false)
+  position: fixed
+  left: 50%
+  @if $top != false
+    top: $top * 1px
+  @else
+    top: 0
+  margin-left: $width / -2 * 1px
+  width: $width * 1px
+
+
+
+
+@mixin bounds($width, $height, $left, $top, $position: false, $background: false)
+  display: inline-block
+  width: $width * 1px
+  height: $height * 1px
+  left: $left * 1px
+  top: $top * 1px
+  @if $position != false
+    position: $position
+  @else
+    position: relative
+  @if $background != false
+    background: $background
+
+
+
+@mixin rect($width, $height, $background: false)
+  display: inline-block
+  width: $width * 1px
+  height: $height * 1px
+  @if $background != false
+    background: $background
+
+@mixin rect_absolute($width, $height, $left, $top, $background: false)
+  +rect($width, $height, $background)
+  position: absolute
+  left: $left * 1px
+  top: $top * 1px
+
+@mixin rect_absolute_trbl($width, $height, $top: false, $right: false, $bottom: false, $left: false, $background: false)
+  +rect($width, $height, $background)
+  position: absolute
+  @if $top != false
+    top: $top * 1px
+  @if $right != false
+    right: $right * 1px
+  @if $bottom != false
+    bottom: $bottom * 1px
+  @if $left != false
+    left: $left * 1px
+
+
+
+@mixin absolute($left, $top)
+  position: absolute
+  left: $left * 1px
+  top: $top * 1px
+@mixin absolute_rt($right, $top)
+  position: absolute
+  right: $right * 1px
+  top: $top * 1px
+@mixin absolute_lb($left, $bottom)
+  position: absolute
+  left: $left * 1px
+  bottom: $bottom * 1px
+@mixin absolute_rb($right, $bottom)
+  position: absolute
+  right: $right * 1px
+  bottom: $bottom * 1px
+
+
+@mixin relative($left, $top)
+  position: relative
+  left: $left * 1px
+  top: $top * 1px
+@mixin relative_rt($right, $top)
+  position: relative
+  right: $right * 1px
+  top: $top * 1px
+@mixin relative_lb($left, $bottom)
+  position: relative
+  left: $left * 1px
+  bottom: $bottom * 1px
+@mixin relative_rb($right, $bottom)
+  position: relative
+  right: $right * 1px
+  bottom: $bottom * 1px
+  
+
+@mixin text($font, $color: false, $alignment: false, $transform: false, $line_height: false)
+  font: $font
+  @if $color != false
+    color: $color
+  @if $alignment != false
+    text-align: $alignment
+  @if $transform != false
+    text-transform: $transform
+  @if $line_height != false
+    line-height: $line_height
+  @else
+    line-height: 100%
+
+
+
+
+
+
+
+
+
+
+

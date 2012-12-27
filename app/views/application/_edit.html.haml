@@ -1,0 +1,11 @@
+.modal.fade
+  .modal-header
+    %button.close{'data-dismiss' => 'modal'}
+      &times;
+    %h3
+      = form_title.html_safe
+  .modal-body
+    .component.form_component.new_form_component
+      .component_content
+        .part.form_part
+          = render form_partial

@@ -1,0 +1,57 @@
+
+.simple_form 
+  span.cke_skin_kama
+    padding: 0px
+    +border-radius(0)
+    border: 0px
+    .cke_wrapper
+      +border-radius(0)
+      +box-shadow(0 0 0 1px $theme_border_box_shadow_color inset)
+      background: mix($theme_color, white, 10%)
+
+  
+
+  .controls
+    p
+      line-height: 100%
+      padding: 0px
+
+
+  .alert-error 
+    color: #D00
+    margin-bottom: 10px
+  
+  .hint, .error 
+    clear: left
+    font-size: 12px
+    color: #D00
+    display: block
+  
+  .hint 
+    color: #555
+    font-style: italic
+  
+  .well
+    position: relative
+    .remove_link
+      +absolute(464, 19)
+
+  .with_no_label 
+    div.input  
+      margin-left: 0px
+    .fields
+      position: relative
+      .remove_link
+        +absolute(440 - 120, 3)
+
+  .add_nested_field_input
+    a
+      margin-bottom: 25px
+
+  
+  .controls
+    .attachment_part
+      border-top: none !important
+      margin-top: 0px !important
+      padding: 0px !important
+

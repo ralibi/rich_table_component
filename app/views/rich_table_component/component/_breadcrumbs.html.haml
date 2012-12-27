@@ -1,0 +1,25 @@
+- if breadcrumbs.count > 1
+  .component#breadcrumbs_component
+    .component_content
+      %ul.breadcrumb
+        - last = breadcrumbs.pop
+        - breadcrumbs.each do |breadcrumb|
+          - if breadcrumb.instance_of? Hash
+            %li.dropdown
+              = render 'rich_table_component/component/breadcrumbs_dropdown', breadcrumb: breadcrumb, limit: limit
+              %span.divider= '/'
+          - else
+            %li
+              = breadcrumb
+              %span.divider= '/'
+        - if last.instance_of? Hash
+          %li.dropdown
+            = render 'rich_table_component/component/breadcrumbs_dropdown', breadcrumb: last, limit: limit
+        - else
+          %li
+            = last
+
+
+
+
+

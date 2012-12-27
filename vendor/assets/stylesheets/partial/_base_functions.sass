@@ -1,0 +1,101 @@
+
+// MIXIN /////////////////////////////////////
+
+@mixin box-shadow($shadow1, $shadow2:false, $shadow3:false, $shadow4:false, $shadow5:false)
+  $params: $shadow1
+  @if $shadow2 != false
+    $params: $shadow1, $shadow2
+    @if $shadow3 != false
+      $params: $shadow1, $shadow2, $shadow3
+      @if $shadow4 != false
+        $params: $shadow1, $shadow2, $shadow3, $shadow4
+        @if $shadow5 != false
+          $params: $shadow1, $shadow2, $shadow3, $shadow4, $shadow5
+  -webkit-box-shadow: $params
+  -moz-box-shadow: $params
+  box-shadow: $params
+
+
+
+    
+@mixin user-select($attr)
+  -webkit-user-select: $attr
+  -moz-user-select: $attr
+  user-select: $attr
+
+
+@mixin transform($attr)
+  -webkit-transform: $attr
+  -moz-transform: $attr
+  -ms-transform: $attr
+  -o-transform: $attr
+  transform: $attr
+  image-rendering: -moz-crisp-edges
+  -ms-interpolation-mode: nearest-neighbor
+
+
+@mixin punched-text($color:false)
+  $temp_color: $body_color
+  @if $color != false
+    $temp_color: $color
+  
+  color: $temp_color
+  @if red(grayscale($temp_color)) < 128
+    text-shadow: 0 1px transparentize(lighten($temp_color, 80%), 0.2)
+  @else
+    text-shadow: 0 -1px transparentize(darken($temp_color, 80%), 0.7)
+      
+
+
+
+
+
+
+
+
+
+
+
+
+//  
+  05  F2F2F2
+  10  E6E6E6
+  15  D9D9D9
+  20  CCCCCC
+  25  BFBFBF
+  30  B3B3B3
+  35  A6A6A6
+  40  999999
+  45  8C8C8C
+  50  808080
+  55  737373
+  60  666666
+  65  595959
+  70  4D4D4D
+  75  404040
+  80  333333
+  85  262626
+  90  1A1A1A
+  95  0D0D0D
+  100 000000
+  
+  1/15  EE
+  2/15  DD
+  3/15  CC
+  4/15  BB
+  5/15  AA
+  6/15  99
+  7/15  88
+  8/15  77
+  9/15  66
+  10/15  55
+  11/15  44
+  12/15  33
+  13/15  22
+  14/15  11
+  15/15  00
+
+
+
+
+

@@ -1,0 +1,23 @@
+$('.modal, .modal-backdrop').remove();
+
+<% params[:remote] = true %>
+
+var $modal = $('<%= j(render "new") %>');
+$modal.modal();
+$modal.on('shown', function(){
+  // Fix Rich Table Component
+  renderModalTableGrid();
+
+  // call jquery-file-upload
+  renderJqueryFileUpload();
+
+  // call ckeditor
+  renderRemoteCkeditor();
+
+  // call tokens
+  renderTokens();
+
+}).on('hidden', function(){
+  $('.showing_new_form').removeClass('showing_new_form');
+  $('.lvr_entry_edited').removeClass('lvr_entry_edited'); 
+});

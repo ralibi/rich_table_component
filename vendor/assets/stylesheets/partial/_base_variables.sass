@@ -1,0 +1,76 @@
+
+$border_radius: 4px
+$button_border_radius: 3px
+
+$yellow_notice_color: #EECC00
+$red_notice_color: #DD0000
+$green_notice_color: #008800
+
+
+$fontfaces_dir: "fontfaces/"
+$images_dir: ""
+
+$footer_height: 50px
++sticky-footer($footer_height, "#wrapper", "#wrapper_footer", "#footer_region")
+
++font-face("Museo300", font-files($fontfaces_dir + "museo300-regular-webfont.ttf", truetype, $fontfaces_dir + "museo300-regular-webfont.woff", woff, $fontfaces_dir + "museo300-regular-webfont.svg", svg), $fontfaces_dir + "museo300-regular-webfont.eot")
++font-face("Museo500", font-files($fontfaces_dir + "museo500-regular-webfont.ttf", truetype, $fontfaces_dir + "museo500-regular-webfont.woff", woff, $fontfaces_dir + "museo500-regular-webfont.svg", svg), $fontfaces_dir + "museo500-regular-webfont.eot")
++font-face("Museo700", font-files($fontfaces_dir + "museo700-regular-webfont.ttf", truetype, $fontfaces_dir + "museo700-regular-webfont.woff", woff, $fontfaces_dir + "museo700-regular-webfont.svg", svg), $fontfaces_dir + "museo700-regular-webfont.eot")
+
+$display_font_family: Museo500, Helvetica, Verdana, Arial, sans-serif
+
+$body_bgcolor: #FFF
+$wrapper_bgcolor: white
+$region_bgcolor: white
+
+$first_color: #444
+$second_color: #FF9900
+$third_color: #06f
+$fourth_color: #555
+$fifth_color: #555
+
+$thin_color: lighten($first_color, 30)
+
+$dark_color: black
+$bright_color: white
+
+
+
+
+
+
+
+$red: #FF122C
+$blue: #2783d0
+
+$theme_color: #222222
+$sub_theme_color: adjust-hue(lighten($theme_color, 7%), -13deg)
+$theme_border_box_shadow_color: transparentize($dark_color, 0.85)
+
+
+$body_color: lighten($dark_color, 20%)
+$font_size: 13px
+$button_font_size: 12px
+  
+$hyperlink_color: $blue
+$focus_color: #0080FF
+
+$main_menu_color: mix($theme_color, $bright_color, 20%)
+$menu_background_color: darken($bright_color, 3%)
+
+$web_width: 960px
+
+
+
+
+
+
+
+$main_text_color: $first_color
+$main_font_size: 13px
+$main_font_family: Helvetica, Arial, sans-serif
+$quote_font_family: times, serif
+
+$small_radius: 5px
+$medium_radius: $small_radius * 2
+$large_radius: $medium_radius * 2

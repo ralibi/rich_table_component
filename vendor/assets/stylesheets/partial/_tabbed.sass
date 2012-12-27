@@ -1,0 +1,33 @@
+$tab_border_color: mix($dark_color, white, 25)
+$tab_border_hover_color: mix($tab_border_color, white, 30)
+
+.component.tabbed_component
+  border-bottom: solid 1px $tab_border_color
+  padding-bottom: 5px
+  margin-bottom: 10px
+  .tabs
+    margin-right: 20px
+    text-align: left
+    a
+      padding: 5px 10px
+      margin: 1px 6px
+      margin-bottom: -5px
+      font-size: 12px
+      vertical-align: bottom
+      &:hover
+        border: solid 1px
+        margin: 0px 5px
+        margin-bottom: -6px
+        border-color: $tab_border_color $tab_border_color white
+      
+      &.current_tab
+        border: solid 1px
+        margin: 0px 5px
+        margin-bottom: -6px
+        padding: 10px 10px 5px
+        font-size: 16px
+        font-weight: bold
+        border-color: $tab_border_color $tab_border_color white
+        color: $dark_color
+        
+        

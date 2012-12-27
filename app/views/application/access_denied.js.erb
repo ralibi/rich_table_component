@@ -1,0 +1,5 @@
+showGlobalNotification('<%= flash[:error] %>', {type: ERROR});
+removeGlobalNotification();
+
+<% flash[:error].try(:clear) %>
+<% flash[:notice].try(:clear) %>

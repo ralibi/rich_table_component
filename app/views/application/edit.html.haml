@@ -1,0 +1,8 @@
+.component.form_component.edit_form_component
+  .component_title
+    %h1= sanitize "#{t('updating')} #{t(controller_name.singularize)}"
+  .component_content
+    .part.form_part
+      = render 'form'
+    = #link_to 'Back', controller: controller_name, action: 'index' 
+

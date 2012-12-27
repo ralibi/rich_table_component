@@ -1,0 +1,47 @@
+- rm_operation ||= nil
+
+- @q = recapitulation_model.tableize.classify.constantize.search(params[:q])
+= simple_form_for @q, url: {controller: recapitulation_model.tableize, action: 'index'}, html: {method: :get, class: 'form-horizontal recapitulation_form'}, remote: true do |f|
+
+  = hidden_field_tag 'recapitulation', true
+
+  .control-group.select.optional
+    %label.select.optional.control-label{for: 'group_row'}= t('row')
+    .controls
+      = select_tag "group_row", 
+        options_from_collection_for_select(items, 
+          :first, :last), include_blank: true, class: 'select optional'
+
+
+  .control-group.select.optional
+    %label.select.optional.control-label{for: 'group_col'}= t('column')
+    .controls
+      = select_tag "group_col", 
+        options_from_collection_for_select(items, 
+          :first, :last), include_blank: true, class: 'select optional'
+
+  - if rm_operation.present?
+    .control-group.select.optional
+      %label.select.optional.control-label{for: 'operation_value'}= t('operation_value')
+      .controls
+        = select_tag "operation_value", 
+          options_from_collection_for_select( rm_operation[:column].map{|m| (m.class == Hash ? [m[:value], t(m[:label])] : [m, t(m)])} , 
+            :first, :last), include_blank: true, class: 'select optional'
+
+    .control-group.select.optional
+      %label.select.optional.control-label{for: 'operation_type'}= t('operation_type')
+      .controls
+        = select_tag "operation_type", 
+          options_from_collection_for_select(rm_operation[:type].map{|m| [m, t(m)]}, 
+            :first, :last), include_blank: true, class: 'select optional'
+
+  - if advanced_search_attributes.present?
+    = render "rich_table_component/rtc/advanced_search_recapitulation",  
+      recapitulation_model: recapitulation_model, 
+      advanced_search_attributes: advanced_search_attributes,
+      f: f
+
+  .form-actions
+    = submit_tag "#{t('show_recapitulation')}", class: 'btn btn-primary'
+    %input.btn{type: "submit", name: "export_pdf", value: t('pdf')}
+    %input.btn{type: "submit", name: "export_xls", value: t('xls')}

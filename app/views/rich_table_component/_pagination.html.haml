@@ -1,0 +1,11 @@
+- rtc_controller_name ||= controller_name
+- @controller_names = instance_variable_get("@#{rtc_controller_name}")
+- if @controller_names.respond_to?(:total_pages)
+  - if @controller_names.length > 0
+    = will_paginate(@controller_names, :renderer => PaginationListLinkRenderer, params: params, remote: true, :page => params[:page], :per_page => params[:per_page].presence || @controller_names.per_page)
+    .page_entries_info
+      = page_entries_info @controller_names
+      
+  - else
+    .rtc_empty_data{style: 'font-size: 11px'}
+      = sanitize "Data #{t(rtc_controller_name.singularize)} kosong"

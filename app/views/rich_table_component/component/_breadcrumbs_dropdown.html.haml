@@ -1,0 +1,18 @@
+= breadcrumb[:current] 
+%ul.dropdown-menu
+  - if breadcrumb[:parent_object].present?
+    - if breadcrumb[:parent_object].respond_to?(breadcrumb[:resource])
+      - breadcrumb[:parent_object].send(breadcrumb[:resource]).limit(limit).each do |resource|
+        %li= link_to resource, {controller: breadcrumb[:resource], action: 'show', id: resource} if can?(:read, resource)
+      - - total_breadcrumb_data = breadcrumb[:parent_object].send(breadcrumb[:resource]).count
+      - if total_breadcrumb_data > limit
+        %li= link_to "- - #{t('see_all')} (#{total_breadcrumb_data} data) - -".html_safe, {controller: breadcrumb[:resource], action: 'index', "#{breadcrumb[:parent_object].class.name.underscore}_id" => breadcrumb[:parent_object].id} if can?(:read, breadcrumb[:resource].classify.constantize)
+    - else
+      - resource = breadcrumb[:parent_object].send(breadcrumb[:resource].singularize)
+      %li= link_to resource, {controller: breadcrumb[:resource], action: 'show', id: resource} if can?(:read, resource)
+  - else
+    - breadcrumb[:resource].classify.constantize.limit(limit).each do |parent_resource|
+      %li= link_to parent_resource, {controller: breadcrumb[:resource], action: 'show', id: parent_resource} if can?(:read, parent_resource)
+    - total_breadcrumb_data = breadcrumb[:resource].classify.constantize.count
+    - if total_breadcrumb_data > limit
+      %li= link_to "- - #{t('see_all')} (#{total_breadcrumb_data} data) - -".html_safe, {controller: breadcrumb[:resource], action: 'index'} if can?(:read, breadcrumb[:resource].classify.constantize)

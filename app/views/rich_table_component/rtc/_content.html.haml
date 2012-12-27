@@ -1,0 +1,22 @@
+- rtc_controller_name ||= controller_name
+- rtc_column_header = true if rtc_column_header.nil?
+- rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
+- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
+- columns_width = columns_width.presence || []
+
+.rtc_content  
+  .rtc_grid_header{style: (rtc_column_header.present? ? '' : 'display: none !important')}
+    - if columns_width.present?
+      - headers.each_with_index do |header, i|
+        .rtc_gh_item{'data-column-width' => columns_width[i]}
+          = header.present? ? sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial) : raw("&nbsp;")
+    - else
+      - headers.each do |header|
+        .rtc_gh_item
+          = header.present? ? sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial) : raw("&nbsp;")
+        
+  .rtc_grid
+    = render "rich_table_component/rtc/table", 
+      rtc_controller_name: rtc_controller_name, 
+      rtc_partial: rtc_partial, 
+      rtc_empty_data_message: rtc_empty_data_message

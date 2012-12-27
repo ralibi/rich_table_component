@@ -1,0 +1,62 @@
+- rtc_controller_name ||= controller_name
+- search_constraint ||= nil
+- search_key ||= 'q'
+- rtc_title = true if rtc_title.nil?
+- rtc_header = true if rtc_header.nil?
+- rtc_column_header = true if rtc_column_header.nil?
+- rtc_footer = true if rtc_footer.nil?
+- rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
+- toggle_view = false if toggle_view.nil?
+- add_form_remote = true if add_form_remote.nil?
+- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
+- rtc_button_new ||= nil
+- rtc_selection_checkbox ||= nil
+- advanced_search_attributes ||= nil
+- columns_width = columns_width.presence || []
+- rtc_actions ||= nil
+- export_attributes ||= nil
+- recapitulation_matrix ||= nil
+- table_title ||= nil
+
+.component.rich_table_component{class: "#{rtc_controller_name}_component"}
+  - if rtc_title.present? || rtc_button_new.present?
+    = render "rich_table_component/rtc/component_title", 
+      rtc_controller_name: rtc_controller_name, 
+      rtc_title: rtc_title
+
+  = render "rich_table_component/rtc/component_actions", 
+    rtc_controller_name: rtc_controller_name, 
+    params: params, 
+    rtc_title: rtc_title, 
+    add_form_remote: add_form_remote, 
+    rtc_button_new: rtc_button_new,
+    rtc_actions: rtc_actions,
+    export_attributes: export_attributes
+  
+  = render "rich_table_component/rtc/component_content", 
+    search_constraint: search_constraint, 
+    search_key: search_key,
+    headers: headers, 
+    rtc_header: rtc_header,
+    rtc_column_header: rtc_column_header,
+    rtc_footer: rtc_footer,
+    rtc_controller_name: rtc_controller_name, 
+    rtc_partial: rtc_partial, 
+    toggle_view: toggle_view,
+    rtc_empty_data_message: rtc_empty_data_message,
+    advanced_search_attributes: advanced_search_attributes,
+    columns_width: columns_width,
+    table_title: table_title,
+    params: params
+
+  - if rtc_selection_checkbox
+    - if rtc_selection_checkbox[:action]
+      %form{action: rtc_selection_checkbox[:action], class: "rtc_selection_checkbox", id: "rtc_selection_checkbox_#{rtc_controller_name}"}
+        - if rtc_selection_checkbox[:label]
+          %input{type: 'submit', class: 'button', value: rtc_selection_checkbox[:label]}
+
+
+  - if recapitulation_matrix
+    = render 'rich_table_component/rtc/recapitulation_matrix',
+      rtc_controller_name: rtc_controller_name, 
+      recapitulation_matrix: recapitulation_matrix

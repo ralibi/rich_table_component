@@ -1,0 +1,42 @@
+
+
+
+%br
+
+%ul.nav.nav-tabs
+
+  - groups.each_with_index do |rm, idx|
+    %li{class: (idx == 0 ? 'active' : '')}
+      %a{"data-toggle" => "tab", :href => "#rm_#{rm[:recapitulation_model].tableize}"}
+        = rm[:recapitulation_title].presence || "#{t(rm[:recapitulation_model].tableize)}"
+
+.tab-content
+
+  - groups.each_with_index do |rm, idx|
+    - advanced_search_attributes = rm[:advanced_search_attributes]
+    .tab-pane{id: "rm_#{rm[:recapitulation_model].tableize}", class: (idx == 0 ? 'active' : '')}
+      - items = []
+      - recapitulation_matrix = rm[:recapitulation_matrix]
+      - recapitulation_matrix.each do |item|
+        - case item
+        - when Hash
+          - label = t(item[:label])
+          - value = item[:value]
+        - else
+          - label_splitter = item.split('__').first.split('.')
+          - label = label_splitter.pop
+          - label = t([label_splitter, label].compact.join('_'))
+          - value = item
+        - items << [value, label]
+
+      .well
+        %h2
+          = "Rekapitulasi "
+          = rm[:recapitulation_title].presence || "#{t(rm[:recapitulation_model].tableize)}"
+        %br
+
+        = render "rich_table_component/rtc/recapitulation_matrix_form",  
+          recapitulation_model: rm[:recapitulation_model],
+          rm_operation: rm[:operation],
+          items: items,
+          advanced_search_attributes: advanced_search_attributes

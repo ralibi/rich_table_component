@@ -1,0 +1,64 @@
+!!! XML
+%Workbook{:xmlns => "urn:schemas-microsoft-com:office:spreadsheet", "xmlns:html" => "http://www.w3.org/TR/REC-html40", "xmlns:o" => "urn:schemas-microsoft-com:office:office", "xmlns:ss" => "urn:schemas-microsoft-com:office:spreadsheet", "xmlns:x" => "urn:schemas-microsoft-com:office:excel"}
+  %Styles
+    %Style{"ss:ID" => "Title"}
+      %Font{"ss:Bold" => "1", "ss:Size" => "16"}
+    %Style{"ss:ID" => "Header"}
+      %Borders
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Left", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Top", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Right", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Bottom", "ss:Weight" => "1"}
+      %Font{"ss:Bold" => "1", "ss:Color" => "#333333", "ss:Size" => "11"}
+      %Interior{"ss:Color" => "#DDDDDD", "ss:Pattern" => "Solid"}
+    %Style{"ss:ID" => "Content"}
+      %Borders
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Left", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Right", "ss:Weight" => "1"}
+        %Border{"ss:Color" => "#666666", "ss:LineStyle" => "Continuous", "ss:Position" => "Bottom", "ss:Weight" => "1"}
+      %Font{"ss:Color" => "#333333", "ss:Size" => "11"}
+  %Worksheet{"ss:Name" => "Sheet1"}
+    - rtc_controller_name = params[:rtc_controller_name].presence || controller_name
+    - rtc_class_name = rtc_controller_name.classify if rtc_class_name.nil?
+    - @rtc_controller_name = instance_variable_get("@#{rtc_controller_name}")
+    %Table
+      %Column{"ss:AutoFitWidth" => "1"}
+      %Row
+        %Cell{"ss:StyleID" => "Title"}
+          %Data{"ss:Type" => "String"}= "Tabel " + t(rtc_controller_name.classify.underscore)
+      %Row{"ss:Index" => "3"}
+        - params[:export_attribute_ids].each do |att|
+          - attribute = att.to_s
+          %Cell{"ss:StyleID" => "Header"}
+            %Data{"ss:Type" => "String"}= t((attribute.split('.').last(2) - ['to_s']).join('_').presence || @rtc_controller_name.klass.name.underscore)
+      - @rtc_controller_name.each do |rtc|
+        %Row
+          - params[:export_attribute_ids].each do |att|
+            - attribute = att.to_s
+            - splitter = attribute.split('.')
+            - splitter.unshift(rtc)
+            - val = splitter.inject do |ret, n| 
+              - if ret.respond_to? :collect
+                - ret.collect(&(n.to_sym))
+              - else
+                - ret.try(n)
+            - val = val.join(', ') if val.instance_of? Array
+
+            - case val.class.to_s
+            - when 'String'
+              - cell_type = "String"
+            - when 'Fixnum'
+              - cell_type = "Number"
+            - when 'ActiveSupport::TimeWithZone'
+              - cell_type = "String"
+            - when 'Date'
+              - cell_type = "String"
+            - when 'NilClass'
+              - cell_type = nil
+            - else
+              - cell_type = "String"
+            - if cell_type == nil
+              %Cell{"ss:StyleID" => "Content"}
+            - else
+              %Cell{"ss:StyleID" => "Content"}
+                %Data{"ss:Type" => cell_type}= strip_tags(val.to_s)

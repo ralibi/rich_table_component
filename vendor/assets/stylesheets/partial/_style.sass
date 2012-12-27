@@ -1,0 +1,674 @@
+// General element style
+a
+  color: $second_color
+  text-decoration: none
+  display: inline-block
+  +transition-property(color)
+  +transition-duration(0.5s)
+  &:hover
+    color: $third_color
+    text-decoration: underline
+
+h1
+  font: #{$main_font_size * 3} Museo700, $display_font_family
+  color: $dark_color
+  padding-top: $main_font_size * 1.8
+  padding-bottom: $main_font_size * 0.8
+  a
+    color: $dark_color
+
+h2
+  font: #{$main_font_size * 1.8} $main_font_family
+  color: $dark_color
+  padding-top: $main_font_size * 1.2
+  padding-bottom: $main_font_size * 0.3
+
+h3
+  font: #{$main_font_size * 1.2} $main_font_family
+  color: $third_color
+
+h4
+  font: #{$main_font_size * 0.9} $main_font_family
+  font-weight: bold
+
+h5
+  font: #{$main_font_size * 0.7} $main_font_family
+  font-weight: bold
+
+
+p
+  line-height: $main_font_size * 1.7
+  padding: ($main_font_size * 0.75) 0
+
+img
+  vertical-align: bottom
+
+body
+  background: $body_bgcolor
+  font: $main_font_size $main_font_family
+  color: $main_text_color
+
+  #wrapper
+    background: $body_bgcolor url($images_dir + "unm_pinisi.png") no-repeat center bottom
+    overflow: hidden
+    #header_region.region
+      background-color: lighten($dark_color, 95)
+      position: relative
+      height: 100px
+      z-index: 1000
+      +box-shadow(0px -8px 4px 10px transparentize($dark_color, 0.7))
+      .area
+        &#header_area
+          position: relative
+          #toolbar_component.component
+            position: absolute
+            right: 0px
+            font-size: $main_font_size * 0.85
+            text-align: right
+            padding: 10px 0px
+        &#navigation_area
+          +rect_absolute(960, 50, 0, 128, lighten($dark_color, 85))
+          border-bottom: 2px solid $second_color
+      #logo_component
+        a
+          +rect_absolute(204, 76, 10, 10, url($images_dir + "unm.png") left bottom)
+          &:hover
+            background-position: left top
+
+    #main_region.region
+      padding-top: 10px
+      padding-bottom: 50px
+      overflow: hidden
+      .area
+        &#yielded_area
+          .breadcrumb_component
+            .home_breadcrumb
+          .comments_component
+            .comment_entry_form
+              .entry_content
+                margin-left: 80px
+                .entry_user
+                  margin-top: 10px
+                  margin-left: -80px
+                  float: left
+
+            .comment_entry
+              overflow: hidden
+              margin-bottom: 10px
+              .entry_content
+                background-color: $table_background_color
+                +box-shadow(0 0 0 1px $table_border_color inset)
+                margin-left: 80px
+                .entry_user
+                  margin-left: -80px
+                  float: left
+                .entry_description
+                  .entry_description_head
+                    padding: 5px 10px
+                    margin: 1px
+                  .entry_description_body
+                    padding: 10px
+                    margin: 1px
+                    background: $bright_color
+          
+          .see_more_part
+            text-align: center  
+            a
+              position: relative
+              top: -20px
+              font-size: 12px
+
+        &#featured_area
+          #featured_component.component
+            .component_content
+              position: relative
+              height: 300px
+              background-color: lighten($dark_color, 90)
+              // +border-radius($medium_radius)
+              .entry
+                position: relative
+                height: 300px
+                .entry_title
+                  +absolute(0, 0)
+                  line-height: 100%
+                  padding: 0px
+                  margin: 0px
+                  a
+                    display: inline-block
+                    color: white
+                    padding: 20px 20px
+                    background-color: transparentize($second_color, 0.3)
+                    &:hover
+                      background-color: $second_color
+
+                .entry_content
+
+              .st_thumbs
+                +absolute_rb(5, 0)
+                .st_thumbs_item
+                  +rect(20, 20)
+                  margin: 3px
+                  background-color: transparentize($second_color, 0.3)
+                  cursor: pointer
+                  &.selected
+                    background-color: $second_color
+                  &:hover
+                    background-color: $second_color
+                    +rect(22, 22)
+                    margin: 2px
+
+
+
+
+
+        &#main_area
+          #latest_news_component
+            .entries
+              .entry
+                padding: 5px 10px 5px 84px
+                overflow: hidden
+                background-color: lighten($dark_color, 98)
+                margin-bottom: 2px
+                &:hover
+                  background-color: lighten($dark_color, 95)
+                .entry_content
+                  margin-top: $main_font_size * -0.5
+
+                .entry_featured_image
+                  +rect(64, 64)
+                  margin-left: -74px
+                  float: left
+                  overflow: hidden
+                  img.not_found
+                    +opacity(0.1)
+
+
+        &#sidebar_area
+          .component
+            .component_content
+              +box-shadow(0 0 0 1px $theme_border_box_shadow_color inset)
+              padding: 20px 20px
+              +background-image(linear-gradient(lighten($table_background_color, 10), lighten($table_background_color, 8) 30px, lighten($table_background_color, 6) 100px))
+          .user_component
+            .component_content
+              +box-shadow(none)
+              background: none
+              height: 75px
+              padding: 0px
+              margin-left: 70px
+
+              .avatar_part
+                margin-left: -70px
+                float: left
+              .user_detail_part
+                .user_name
+                  a
+                    font-weight: bold
+                    color: $dark_color
+
+        .component
+          .entry
+            .entry_title
+            .entry_content
+              .field
+                font: #{$main_font_size * 0.9}/#{$main_font_size * 0.9}
+                padding-left: 30%
+                clear: both
+                float: none
+                label
+                  font-weight: bold
+                  margin-left: #{(-300/7)+'%'}
+                  width: #{(-150/7)+'%'}
+                  float: left
+                .field_content
+                  text-align: right
+              .continue_reading_part
+                font-size: $main_font_size * 0.9
+                font-style: italic
+                color: lighten($main_text_color, 50)
+                &:hover
+                  color: $third_color
+
+              ul, ol
+                padding: ($main_font_size * 0.5) 0
+                > li
+                  line-height: $main_font_size * 1.7
+                  padding: ($main_font_size * 0.25) 0
+                  list-style: disc
+                  margin-left: $main_font_size * 3
+                  ul, ol
+                    > li
+                      line-height: $main_font_size * 1.7
+                      padding: 0
+              ol
+                > li
+                  list-style: decimal
+
+              blockquote
+                padding: 0px 20px
+                margin-top: 20px
+                margin-bottom: 20px
+                background-color: mix($theme_color, white, 4%)
+                p
+                  font-family: $quote_font_family
+                  font-size: $main_font_size * 1.5
+                  line-height: $main_font_size * 1.5 * 1.5
+            
+            
+
+          &.single_component
+            .entry
+              .entry_title
+              .entry_content
+              .entry_meta
+                font-size: $main_font_size * 0.85
+                color: $thin_color
+                padding-top: $main_font_size
+                padding-bottom: $main_font_size * 2
+                overflow: hidden
+
+                .part
+                  display: inline-block
+                  float: left
+                  margin-right: 20px
+                  .part_label
+                    margin-right: 5px
+                  .part_value
+                    color: $main_text_color
+                    background-color: mix($thin_color, white, 25)
+                    padding: 1px 5px
+                    +border-radius(8px)
+
+                .right_part
+                  float: right
+                  margin-right: 0px
+                  margin-left: 20px
+                .status_part
+                  &.rejected
+                    .part_value
+                      color: $bright_color
+                      background-color: $red_notice_color
+                  &.approved
+                    .part_value
+                      color: $bright_color
+                      background-color: $green_notice_color
+
+                .total_progress_part
+                  &.not_zero_progress
+                    .part_value:hover
+                      background-color: $second_color
+                      a
+                        color: $bright_color
+
+                .advisers_part
+                  .part_value
+                    a
+                      img
+                        border: 1px solid $theme_border_box_shadow_color
+                        padding: 1px
+                        vertical-align: top
+                .button_part
+                  margin-left: 5px
+                  .part_value
+                    color: $main_text_color
+                    background-color: none
+                    padding: 0
+                    +border-radius(none)
+                    a.button
+                      height: 14px
+                      padding: 1px 8px 2px
+                      margin-top: -1px
+                      
+                .entry_meta_h_separator
+                  clear: both
+                  height: 4px
+
+            .entry_action
+              text-align: center
+              padding: 30px 0px
+
+
+
+
+
+      img.avatar
+        padding: 2px
+        border: 1px solid $theme_border_box_shadow_color
+        background: mix($theme_color, white, 4%)
+
+  #footer_region.region
+    $footer_top_height: 5px
+    #footer_top_area
+      height: 1px
+    #footer_bottom_area
+      height: $footer_height - $footer_top_height
+      .component
+        &#copyright_component
+          text-align: center
+          a
+            text-decoration: underline
+
+
+.component
+  padding-top: 10px
+  padding-bottom: 10px
+  .component_title
+    font: #{$main_font_size * 2} Museo700, $display_font_family
+    color: $dark_color
+    margin-bottom: 10px
+  .component_content
+    .entries
+      .entry
+        margin-bottom: 10px
+        .entry_title
+    .part.form_part
+      border-top: 1px solid #DDDDDD
+      padding-top: 25px
+
+.entry
+  .entry_title
+  .entry_content
+
+
+.entries
+  .entry
+    .entry_title
+    .entry_content
+    .entry_meta
+
+.component
+  .component_title
+  .component_content
+
+.region
+  .area
+    .section
+      .part
+
+
+
+
+.menu.page_menu
+  a
+    display: block
+  > ul
+    > li
+      float: left
+      > div
+        a
+          padding: 17px 10px
+          font: 16px/16px $display_font_family
+          color: $dark_color
+          &:hover
+            color: $second_color
+            text-decoration: none
+            background-color: lighten($dark_color, 90)
+      > ul
+        display: none
+        > li
+          > div
+            > a
+          > ul
+            > li
+              > div
+                >a
+
+      &.has_children
+        position: relative
+        > div
+          a
+            // +pictograms_after("/", 19px/#{$main_font_size}, 0 0 0 2px)
+        &:hover
+          > div
+            a
+              color: $second_color
+              text-decoration: none
+              background-color: lighten($dark_color, 90)
+          > ul
+            display: block
+            position: absolute
+            +box-shadow(0px 3px 4px 0px transparentize($dark_color, 0.7))
+            > li
+              > div
+                a
+                  padding: 17px 12px 17px 10px
+                  color: $second_color
+                  text-decoration: none
+                  background-color: lighten($dark_color, 90)
+                  white-space: nowrap
+                  &:hover
+                    background-color: lighten($dark_color, 95)
+
+
+
+
+$menu_border_color: lighten($dark_color, 90)
+
+
+.menu.menu_component
+  .component_content
+    a
+      display: block
+      &:hover
+        color: $third_color
+        text-decoration: none
+    > ul
+      > li
+        float: left
+        > a
+          font: 12px/12px $main_font_family
+          font-weight: bold
+        > ul
+          > li
+            > a
+              font: 11px/11px
+            > ul
+              > li
+                > div
+                  >a
+
+  &#main_menu
+    +absolute(280, 58)
+    .component_content
+      a
+        font: 16px/16px 'Museo300'
+        &:hover
+          color: $third_color
+      > ul
+        > li
+          margin-right: 40px
+
+#sidebar_area
+  .menu.menu_component
+    .component_content
+      a
+        &.current_menu_item
+          background-color: $second_color
+          color: $bright_color
+          &:hover
+            background-color: $second_color
+            color: $bright_color
+      > ul
+        margin-left: -20px
+        margin-right: -20px
+        padding-left: 15px
+        padding-right: 15px
+        > li
+          margin-left: -15px
+          margin-right: -15px
+          padding-left: 15px
+          padding-right: 15px
+          float: none
+          > a
+            padding: 6px 0px
+            font: 13px/13px $main_font_family
+            font-weight: bold
+
+            margin-left: -14px
+            margin-right: -14px
+            padding-left: 15px
+            padding-right: 15px
+            &:hover
+              background-color: lighten($dark_color, 92)
+              color: $second_color
+          > ul
+            > li
+              > a
+                font: 12px/12px
+                padding: 3px 0px
+                margin-left: -14px
+                margin-right: -14px
+                padding-left: 25px
+                padding-right: 15px
+                &:hover
+                  background-color: lighten($dark_color, 92)
+                  color: $second_color
+              > ul
+                > li
+                  > div
+                    > a
+
+
+
+
+.attachment_part
+  margin-top: 10px
+  padding: 10px 0
+  border-top: 1px solid $theme_border_box_shadow_color
+  .attachment_entry
+    overflow: hidden
+    a:not(.btn)
+      color: $dark_color
+    .attachment_entry_content
+      margin-left: 50px
+      margin-bottom: 10px
+      .attachment_entry_image
+        margin-left: -50px
+        float: left
+        padding: 2px
+      .attachment_entry_description
+        .file_name_part
+          font-weight: bold
+        .file_size_part
+          font-size: $main_font_size * 0.85
+          float: left
+          margin-right: 10px
+        .download_part
+          font-size: $main_font_size * 0.85
+
+
+a[rel=popover]
+  border-bottom: 1px dotted
+
+.field
+  label
+  textarea
+    height: 120px
+
+
+.document_upload_result
+  margin-bottom: 100px
+  table.upload_files
+    tr
+      td:first-child
+        font-weight: bold
+      td
+        padding-right: 10px
+
+.document_upload_result
+  .attachment_entry
+    position: relative
+    background-color: #DFF0D8
+    margin-bottom: 1px
+    padding: 2px 0px
+    .remove_fresh_uploaded
+      position: absolute
+      left: 300px
+      top: 5px
+.nested_field
+  position: relative
+  margin-bottom: 1px
+  padding: 2px 0px
+  .remove_link
+    position: absolute
+    left: 460px
+    top: 5px
+
+.document_upload
+  position: relative
+  top: -175px
+  left: 160px
+  max-width: 400px
+
+
+
+
+.component.admin_toolbar_component
+  overflow: hidden
+  position: fixed
+  top: 0px
+  left: 0px
+  padding: 10px
+  +border-radius(0 0 6px 0)
+  background: #555
+  color: white
+  z-index: 10000
+  +opacity(0.1)
+  a
+    color: white
+  &:hover
+    top: 0px
+    +opacity(1)
+  li
+    margin-right: 20px
+
+#debugs
+  position: fixed
+  bottom: 0px
+  left: 0px
+  background-color: #555
+  color: #DDD
+  padding: 10px 20px
+  +opacity(0.1)
+  &:hover
+    +opacity(1)
+
+.debug_component
+  display: none
+
+
+.global_notification
+  display: inline-block
+  margin: 0 auto
+  position: fixed
+  top: 40px
+  left: 50%
+  margin-left: -70px
+  font-weight: bold
+  padding: 3px 20px 5px
+  background-color: #FFCC00
+  cursor: pointer 
+  z-index: 999
+  @include border-radius(0 0 3px 3px)
+
+  &.info
+    background-color: #0074CC
+    color: #FFFFFF
+    font-weight: bold
+  &.success
+    background-color: #5BB75B
+    color: #FFFFFF
+    font-weight: bold
+  &.warning
+    background-color: #FAA732
+    color: #000000
+    font-weight: bold
+  &.danger
+    background-color: #DA4F49
+    color: #FFFFFF
+    font-weight: bold
+
+
+  &:hover
+    padding: 4px 20px 5px
+

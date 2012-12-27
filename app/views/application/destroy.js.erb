@@ -1,0 +1,9 @@
+
+var $deleted = $('.lvr_entry_deleted');
+$deleted.addClass('deleted');
+setTimeout(function(){
+  $deleted.fadeOut('slow', function(){
+    $deleted.remove();
+    //decreasePagination($(this).parents('.st_table_grid'));
+  });
+}, 500);

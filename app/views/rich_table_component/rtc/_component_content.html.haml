@@ -1,0 +1,37 @@
+- rtc_controller_name ||= controller_name
+- rtc_header = true if rtc_header.nil?
+- rtc_column_header = true if rtc_column_header.nil?
+- rtc_footer = true if rtc_footer.nil?
+- rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
+- toggle_view = false if toggle_view.nil?
+- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
+- search_key ||= 'q'
+- advanced_search_attributes ||= nil
+- columns_width = columns_width.presence || []
+- table_title ||= nil
+
+.component_content
+  - if rtc_header.present?
+    = render "rich_table_component/rtc/header", 
+      search_constraint: search_constraint.presence || nil,
+      search_key: search_key, 
+      rtc_controller_name: rtc_controller_name, 
+      rtc_partial: rtc_partial, 
+      toggle_view: toggle_view, 
+      advanced_search_attributes: advanced_search_attributes,
+      table_title: table_title,
+      params: params
+
+  = render "rich_table_component/rtc/content", 
+    headers: headers, 
+    rtc_controller_name: rtc_controller_name, 
+    params: params, 
+    rtc_column_header: rtc_column_header, 
+    rtc_partial: rtc_partial, 
+    rtc_empty_data_message: rtc_empty_data_message,
+    columns_width: columns_width
+  
+  - if rtc_footer.present?
+    = render "rich_table_component/rtc/footer",
+      rtc_controller_name: rtc_controller_name, 
+      params: params

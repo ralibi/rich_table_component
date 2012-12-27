@@ -1,0 +1,9 @@
+- if notice.present?
+  .global_notification.success
+    = notice
+- elsif alert.present?
+  .global_notification.warning
+    = alert
+- elsif flash[:error].present?
+  .global_notification.danger
+    = flash[:error]

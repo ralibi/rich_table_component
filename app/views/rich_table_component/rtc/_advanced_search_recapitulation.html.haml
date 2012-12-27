@@ -1,0 +1,90 @@
+
+- advanced_search_attributes.compact.each do |att|
+
+  - # Check attribute type, then breakdown att
+  - case att
+  - when Hash
+    - att_params = att[:params]
+    - att = att[:input]
+
+  - attribute = att.to_s
+  - range = true
+  - if att.instance_of?(Hash)
+    - attribute = att[:attribute].to_s
+    - range = att[:range].presence || true
+    - label_name = att[:label]
+  - splitter = attribute.split('.')
+  - attribute_name = splitter.pop
+  - attribute_type = splitter.inject(recapitulation_model.constantize){|memo, obj| memo.reflect_on_all_associations.find{|c| c.name.eql?(obj.to_sym)}.klass}.columns_hash[attribute_name].type
+  - underscore_attribute = attribute.gsub('.', '_')
+  - label_name ||= [splitter.last, attribute_name].compact.join('_')
+
+  - if att_params.present?
+    = f.input "#{underscore_attribute}_eq".to_sym, att_params.merge!({required: false})
+  - else
+
+    - case attribute_type
+    - when :string
+      = f.input "#{underscore_attribute}_cont".to_sym, label: label_name, required: false
+    - when :text
+      = f.input "#{underscore_attribute}_cont".to_sym, label: label_name, required: false
+    - when :integer
+      - if range
+        .range_input
+          .control-group.optional.range.integer
+            %label.integer.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
+            .controls
+              %input.integer.numeric.optional{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+          .control-group.optional.range.integer
+            %label.integer.optional.control-label
+              = t('to')
+            .controls
+              %input.integer.numeric.optional{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+      - else
+        = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false
+    - when :float
+      - if range
+        .range_input
+          .control-group.optional.range.float
+            %label.float.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
+            .controls
+              %input.float.numeric.optional{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+          .control-group.optional.range.float
+            %label.float.optional.control-label
+              = t('to')
+            .controls
+              %input.float.numeric.optional{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+      - else
+        = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false
+    - when :date
+      - if range
+        .range_input
+          .control-group.string.optional.range
+            %label.string.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
+            .controls
+              %input.string.optional.datepicker{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+                %p.help-block DD-MM-YYYY
+          .control-group.string.optional.range
+            %label.string.optional.control-label
+              = t('to')
+            .controls
+              %input.string.optional.datepicker{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+                %p.help-block DD-MM-YYYY
+      - else
+        = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
+    - when :datetime
+      - if range
+        .range_input
+          .control-group.string.optional.range
+            %label.string.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
+            .controls
+              %input.string.optional.datepicker{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+                %p.help-block DD-MM-YYYY
+          .control-group.string.optional.range
+            %label.string.optional.control-label
+              = t('to')
+            .controls
+              %input.string.optional.datepicker{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+                %p.help-block DD-MM-YYYY
+      - else
+        = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'

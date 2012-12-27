@@ -1,0 +1,56 @@
+- rtc_controller_name ||= controller_name
+- toggle_view = false if toggle_view.nil?
+- rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
+- search_key ||= 'q'
+- advanced_search_attributes ||= nil
+- table_title ||= nil
+
+
+.rtc_header
+  .rtc_title
+    - if table_title.present?
+      = "#{table_title}"
+    - else
+      = t("#{rtc_controller_name.singularize}")
+    
+    
+  - if search_constraint.present?
+    .rtc_item.right
+      = search_form_for instance_variable_get("@#{search_key}"), as: search_key.to_sym, url: '#', html: {method: :get, class: "rtc_search input-append", style: 'margin-bottom: 0px'}, remote: true do |f|
+
+        - new_params = Hash.new
+        - new_params.merge! params
+        - if search_constraint.instance_of?(Hash) && search_constraint[:params].present?
+          - new_params.merge! search_constraint[:params].stringify_keys!
+        - new_params.select{|key, val| key != "action" && key != "controller"}.each_pair do |key, val|
+          = hidden_field_tag key.to_s, val.to_s
+        
+        = hidden_field_tag 'rtc_controller_name', rtc_controller_name if rtc_controller_name.present?
+        = hidden_field_tag 'rtc_partial', rtc_partial if rtc_partial.present?
+
+        = f.text_field (search_constraint.instance_of?(Hash) ? search_constraint[:constraint] : search_constraint), :class => "small", :id => "search", style: 'padding: 1px 3px !important; width: 160px'
+        %button{type: 'submit', class: 'add-on btn', style: 'height: 19px; line-height: 12px; padding: 4px 6px'}>
+          %i= icon('search')
+
+  - if toggle_view
+    .rtc_item_separator.right
+
+    .rtc_item.right
+      .btn-group.btn-group-view-toggle{'data-toggle' => 'buttons-radio'}
+        %a.btn.btn-mini.active{href: '#', 'data-remote' => true, 'data-list-view' => 'list'}= icon 'list'
+        %a.btn.btn-mini{href: '#', 'data-remote' => true, 'data-list-view' => 'th'}= icon 'th'
+
+        
+  - if advanced_search_attributes
+    .rtc_item_separator.right
+
+    .rtc_item.right
+      .btn.btn-mini.advanced_search_toggle_button{'data-toggle' => 'button'}= t('advanced_search')
+
+  .rtc_header_expanded
+    - if advanced_search_attributes.present?
+      = render "rich_table_component/rtc/advanced_search",
+        search_key: search_key, 
+        rtc_controller_name: rtc_controller_name, 
+        advanced_search_attributes: advanced_search_attributes,
+        params: params
