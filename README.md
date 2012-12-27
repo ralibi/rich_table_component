@@ -19,9 +19,9 @@ Or install it yourself as:
 ## Usage
 
 
-penggunaan:
 
-CONTROLLER
+
+### CONTROLLER
 
 rich_table_component(relation = {}, _sort_column = {}, _sort_direction = nil, pagination = true)
 
@@ -69,17 +69,15 @@ contoh penggunaan pada controller:
 
 
 
-VIEW
+### VIEW
   = render 'shared/rtc/component' 
 
 Merender file shared/rtc/_component.html.haml
 
 
-##################################
 PARAMETER:
-##################################
 
-rtc_controller_name
+#### rtc_controller_name
   value: string
   default: controller_name atau string dari controller yang menghandle request
   description:
@@ -87,40 +85,40 @@ rtc_controller_name
 
 
 
-rtc_partial
+#### rtc_partial
   value: string
   default: rtc_controller_name.singularize (jika default, merender file partial pada directory yang memanggil)
 
 
-rtc_title
+#### rtc_title
   value: boolean, Hash{ title: 'Judul', wrapper: 'h1'/'h2'/'h3'/'h4' }, or string
   default: true
   description: 
 
 
 
-rtc_header
+#### rtc_header
   value: boolean
   default: true
   description:
     Menampilkan kotak header tabel jika true, dan tidak ditampilkan jika false
 
 
-rtc_column_header
+#### rtc_column_header
   value: boolean
   default: true
   description:
     Menampilkan kotak header kolom header jika true, dan tidak ditampilkan jika false
 
 
-rtc_footer
+#### rtc_footer
   value: boolean
   default: true
   description:
     Menampilkan kotak footer tabel jika true, dan tidak ditampilkan jika false
 
 
-headers (required)
+#### headers (required)
   value: Array of Object
   description:
     Mendefinisikan atribut/kolom yang akan ditampilkan sebagai kolom header, berupa atribut pada model atau asosiasi model
@@ -128,14 +126,14 @@ headers (required)
     [:nip, :name, 'department', :nidn, :certification_number, 'user.email']
 
 
-columns_width
+#### columns_width
   value: Array of Integer
   default: [] / empty array
   description:
     Mengatur ukuran tiap kolom pada tabel. Nilai array merupakan rasio ukuran, misal: [1, 2, 2] berarti [20%, 40%, 40%]
 
 
-search_constraint
+#### search_constraint
   value: symbol
   default: nil
   description:
@@ -145,7 +143,7 @@ search_constraint
 
 
 
-advanced_search_attributes
+#### advanced_search_attributes
   value: Array of Object. Object can be string or symbol or hash {input: ..., params: simple_form input params}
   default: nil
   description:
@@ -165,7 +163,7 @@ advanced_search_attributes
                                   :certification_number ] 
 
 
-export_attributes
+#### export_attributes
   value: Array of Object. Object can be string or symbol
   default: nil,
   description:
@@ -174,48 +172,48 @@ export_attributes
     [:nip, :name, 'department', :nidn, :certification_number, 'user.email']
 
 
-add_form_remote
+#### add_form_remote
   value: boolean
   default: false
   description:
     Menghidupkan form ajax pada button tambah jika true
 
 
-rtc_empty_data_message
+#### rtc_empty_data_message
   value: string
   default: sanitize "Data #{t(rtc_controller_name)} kosong"
   description:
     text yang ditampilkan pada tabel jika data kosong. text dapat dalam format html
 
 
-search_key
+#### search_key
   value: string
   default: 'q'
   description:
     Param key yang dibutuhkan pada fitur pencarian menggunakan gem ransack. Jika tidak menggunakan ransack, pada controller tidak perlu memiliki instance @q
 
 
-rtc_button_new
+#### rtc_button_new
   value: boolean
   default: true
   description:
     Render default button new if true
 
-rtc_actions
+#### rtc_actions
   value: Element or Array of Element
   default: nil
   description:
     Render element(s) side by side with button new
 
 
-toggle_view
+#### toggle_view
   value: boolean
   default: false
   description:
     render toggle rtc view. thumbnail/list
 
 
-table_title
+#### table_title
   value: string
   default: controller_name
   description:
@@ -233,58 +231,57 @@ table_title
 
 
 
-CONTOH KASUS:
+### CONTOH KASUS:
 
-===============================================================================================================================
-Kasus normal ==================================================================================================================
-===============================================================================================================================
+#### Kasus normal
 
-  Menampilkan rtc berupa list `page` pada halaman `index` controller `PagesController` atau `PagesController#index`. RTC yang ingin ditampilkan secara lengkap (memiliki fitur advanced search dan export pdf & xls)
+Menampilkan rtc berupa list `page` pada halaman `index` controller `PagesController` atau `PagesController#index`. RTC yang ingin ditampilkan secara lengkap (memiliki fitur advanced search dan export pdf & xls)
 
-  Yang perlu dilakukan:
-  1. Controller: Pada `PagesController` pages_controller.rb dalam method `index` harus memiliki instance @q dan @pages repond dengan respond_to_remote :index, @pages
-
-    def index
-      ...
-      @q = Page.search(params[:q])
-      @pages = rich_table_component @q.result
-      respond_to_remote :index, @pages
-    end
-
-
-  2. View: Pada view/pages/index.html.haml 
-
-    = render 'shared/rtc/component', 
-      headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
-      columns_width: [2, 6, 1, 1, 1],
-      search_constraint: :title_or_body_or_author_name_or_author_email_cont, 
-      add_form_remote: true, 
-      export_attributes: [:title, :body, ['author.name', 'author'], 'author.email'],
-      advanced_search_attributes: [ :title, 
-                                    :body,
-                                    'author.name',
-                                    'author.email',
-                                    'author.address.city.name']
+Yang perlu dilakukan:
+1. Controller: Pada `PagesController` pages_controller.rb dalam method `index` harus memiliki instance @q dan @pages repond dengan respond_to_remote :index, @pages
+```ruby
+def index
+  ...
+  @q = Page.search(params[:q])
+  @pages = rich_table_component @q.result
+  respond_to_remote :index, @pages
+end
+```
 
 
-  3. View: Pada view/pages/_page.html.haml
-    // Jumlah td disesuaikan dengan jumlah element pada headers, untuk kasus ini berjumlah 5
-    %tr
-      %td
-        = page.title
-      %td
-        = page.body
-      %td
-        = page.author.name
-      %td
-        = page.author.email
-      %td
-        = link_to delete .....
+2. View: Pada view/pages/index.html.haml 
+```haml
+  = render 'shared/rtc/component', 
+    headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
+    columns_width: [2, 6, 1, 1, 1],
+    search_constraint: :title_or_body_or_author_name_or_author_email_cont, 
+    add_form_remote: true, 
+    export_attributes: [:title, :body, ['author.name', 'author'], 'author.email'],
+    advanced_search_attributes: [ :title, 
+                                  :body,
+                                  'author.name',
+                                  'author.email',
+                                  'author.address.city.name']
+```
 
+3. View: Pada view/pages/_page.html.haml
+```haml
+// Jumlah td disesuaikan dengan jumlah element pada headers, untuk kasus ini berjumlah 5
+%tr
+  %td
+    = page.title
+  %td
+    = page.body
+  %td
+    = page.author.name
+  %td
+    = page.author.email
+  %td
+    = link_to delete .....
+```
 
-===============================================================================================================================
-Kasus me-render partial custom yang berbeda ===================================================================================
-===============================================================================================================================
+#### Kasus me-render partial custom yang berbeda
+
 Secara default baris yang dirender adalah _model.html.haml, misal _page.html.haml
 untuk merender partial yang berbeda untuk model page misalnya: _subscriber_page.html.haml dapat dilakukan dengan mendefinisikan parameter `rtc_partial` dengan lokasi file partial tersebut `pages/subscriber_page`
 
@@ -304,117 +301,135 @@ Jika pada rtc terdapat button tambah, edit, atau apapun yang mengharuskan merend
 
 
 
-===============================================================================================================================
-Kasus mengacu controller yang berbeda =========================================================================================
-===============================================================================================================================
-Misal menampilkan koleksi post pada home
-
-  Controller: home#index
-    ...
-    @q = Post.search(params[:q])
-    @posts = rich_table_component @q.result
-    ...
-
-  View:
-    = render 'shared/rtc/component', 
-    headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
-    columns_width: [2, 6, 1, 1, 1],
-    search_constraint: :title_or_body_or_author_name_or_author_email_cont,
-    rtc_controller_name: 'posts'
-
-
-
-
-===============================================================================================================================
-Kasus dua atau lebih table dalam halaman yang sama ===========================================================================
-===============================================================================================================================
-
+#### Kasus mengacu controller yang berbeda
 
 Misal menampilkan koleksi post pada home
 
   Controller: home#index
-    ...
-    @q = Post.search(params[:q])
-    @posts = rich_table_component @q.result
-
-    @p = Post.search(params[:p], search_key: :p)
-    @second_posts = rich_table_component @p.result
-
-    @r = Post.search(params[:r], search_key: :r)
-    @third_posts = rich_table_component @p.result
-    ...
+```ruby
+...
+@q = Post.search(params[:q])
+@posts = rich_table_component @q.result
+...
+```
 
   View:
-    = render 'shared/rtc/component', 
+```haml
+= render 'shared/rtc/component', 
+  headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
+  columns_width: [2, 6, 1, 1, 1],
+  search_constraint: :title_or_body_or_author_name_or_author_email_cont,
+  rtc_controller_name: 'posts'
+```
+
+
+
+#### Kasus dua atau lebih table dalam halaman yang sama
+
+Misal menampilkan koleksi post pada home
+
+Controller: home#index
+```ruby  
+def index
+  ...
+  @q = Post.search(params[:q])
+  @posts = rich_table_component @q.result
+
+  @p = Post.search(params[:p], search_key: :p)
+  @second_posts = rich_table_component @p.result
+
+  @r = Post.search(params[:r], search_key: :r)
+  @third_posts = rich_table_component @p.result
+  ...
+end
+```
+
+  View:
+
+```haml  
+  = render 'shared/rtc/component', 
     headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
     columns_width: [2, 6, 1, 1, 1],
     search_constraint: :title_or_body_or_author_name_or_author_email_cont,
     rtc_controller_name: 'posts'
+```    
 
-    = render 'shared/rtc/component', 
+```haml  
+  = render 'shared/rtc/component', 
     headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
     columns_width: [2, 6, 1, 1, 1],
     search_constraint: :title_or_body_or_author_name_or_author_email_cont,
     rtc_controller_name: 'second_posts',
     rtc_partial: 'posts/second_post',
     search_key: 'p'
+```    
 
-    = render 'shared/rtc/component', 
+```haml  
+  = render 'shared/rtc/component', 
     headers: [:title, :body, ['author.name', 'author'], 'author.email', nil], 
     columns_width: [2, 6, 1, 1, 1],
     search_constraint: :title_or_body_or_author_name_or_author_email_cont,
     rtc_controller_name: 'third_posts',
     rtc_partial: 'posts/third_post',
     search_key: 'r'
+```    
 
 
 
-===============================================================================================================================
-Kasus updating tapi bukan dari tombol edit standar (misal: approve/reject) ====================================================
-===============================================================================================================================
+#### Kasus updating tapi bukan dari tombol edit standar (misal: approve/reject)
+
 tambahkan class html '.edit' pada button custom
 pada method terakhir yang terpanggil sebelum baris terupdate, harus respond remote to :update, 
 dan harus memiliki params[:rtc_partial] yang diassign di controller ATAU dilempar dari form ATAU button edit 
   - assign di controller:  params[:rtc_partial] = 'admin/departments/student'
   - assign pada form (jika melewati modal form, seperti edit pada umumnya)
-      simple_form_for ... do |f|
-        = hidden_field_tag 'rtc_partial', 'admin/departments/student'
-        ...
-      end
+
+```ruby  
+simple_form_for ... do |f|
+  = hidden_field_tag 'rtc_partial', 'admin/departments/student'
+  ...
+end
+```
   - assign dari button (jika tidak melewati modal)
-      link_to 'approve', approve_post_path(post, rtc_partial: 'admin/departments/student'), remote: :true, class: 'btn edit'
+```ruby  
+= link_to 'approve', approve_post_path(post, rtc_partial: 'admin/departments/student'), remote: :true, class: 'btn edit'
+```
 
 Jika model yang diupdate berbeda dengan model controllernya, misal mengupdate `post` pada halaman `UsersController#show`,
 sertakan rtc_controller_name berdampingan dengan rtc_partial,
   contoh: 
     link_to 'approve', approve_post_path(post, rtc_controller_name: 'admin/departments/student', rtc_partial: 'admin/departments/student'), remote: :true, class: 'btn edit'
 
-=====================================
+
 a) Aksi tidak memunculkan modal, tetapi langsung update. Dengan custom method, model yang diupdate sesuai dengan controller
 
 View:
   tambahkan class html '.edit' pada button custom
 
-  ...
-  = link_to 'approve', approve_post_path(post), remote: :true, class: 'btn edit'
-  ...
+```ruby  
+...
+= link_to 'approve', approve_post_path(post), remote: :true, class: 'btn edit'
+...
+```
 
 Controller
   
+```ruby  
+...
+def approve
+  # updating post
+  @post = Post.find(params[:id])
   ...
-  def approve
-    # updating post
-    @post = Post.find(params[:id])
-    ...
-    respond_to do |format|
-      if @post.update_attributes(params[:post])
-        format_remote format, :update, @post
-      else
-        format_remote format, :edit, @post
-      end
+  respond_to do |format|
+    if @post.update_attributes(params[:post])
+      format_remote format, :update, @post
+    else
+      format_remote format, :edit, @post
     end
   end
-  ... 
+end
+... 
+```
 
 
 b) Aksi tidak memunculkan modal, tetapi langsung update. Dengan custom method, model yang diupdate BERBEDA dengan controller.
@@ -423,29 +438,31 @@ b) Aksi tidak memunculkan modal, tetapi langsung update. Dengan custom method, m
 View:
   tambahkan class html '.edit' pada button custom
 
-  ...
-  = link_to 'approve', approve_post_path(post, rtc_controller_name: 'posts', rtc_partial: 'users/post'), remote: :true, class: 'btn edit'
-  ...
+
+```ruby  
+...
+= link_to 'approve', approve_post_path(post, rtc_controller_name: 'posts', rtc_partial: 'users/post'), remote: :true, class: 'btn edit'
+...
+```
 
 Controller
-  
+
+```ruby  
+...
+def approve
+  # updating post
+  @post = Post.find(params[:id])
   ...
-  def approve
-    # updating post
-    @post = Post.find(params[:id])
-    ...
-    respond_to do |format|
-      if @post.update_attributes(params[:post])
-        format_remote format, :update, @post
-      else
-        format_remote format, :edit, @post
-      end
+  respond_to do |format|
+    if @post.update_attributes(params[:post])
+      format_remote format, :update, @post
+    else
+      format_remote format, :edit, @post
     end
   end
-  ... 
-  
-
-
+end
+... 
+```
 
 
 

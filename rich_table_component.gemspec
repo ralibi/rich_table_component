@@ -30,7 +30,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'will_paginate'
   gem.add_dependency 'wicked_pdf'
 
-  gem.add_dependency 'simple_form'
   gem.add_dependency 'compass-rails'  
   gem.add_dependency 'twitter-bootstrap-rails'
 end

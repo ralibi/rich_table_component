@@ -9,7 +9,6 @@ require 'paperclip'
 require 'ckeditor'
 require 'ransack'
 require 'squeel'
-require 'simple_form'
 require 'redis'
 require 'will_paginate'
 require 'wicked_pdf'
@@ -41,12 +40,6 @@ module RichTableComponent
     included do
       helper_method :sort_column, :sort_direction
     end
-
-    module InstanceMethods
-
-
-
-
 
 
 
@@ -593,7 +586,6 @@ module RichTableComponent
 
 
 
-    end
 
   end
 
