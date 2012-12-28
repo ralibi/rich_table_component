@@ -3,7 +3,7 @@
 - the_klass = instance_variable_get("@#{rtc_controller_name}").klass
 - the_klass_name = the_klass.name
 - add_form_remote = true if add_form_remote.nil?
-- rtc_button_new = false if rtc_button_new.nil?
+- rtc_button_new = true if rtc_button_new.nil?
 - export_attributes ||= nil
 - export_attribute_ids = []
 - rtc_actions ||= nil

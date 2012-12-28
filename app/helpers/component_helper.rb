@@ -171,6 +171,10 @@ module ComponentHelper
     render partial: 'rich_table_component/rtc/component', locals: options
   end
 
+  def render_rich_table_component(options)
+    render partial: 'rich_table_component/rtc/component', locals: options
+  end
+
   def render_recapitulation(options)
     render partial: 'rich_table_component/rtc/recapitulation_matrix', locals: options
   end
