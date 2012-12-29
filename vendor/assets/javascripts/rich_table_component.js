@@ -41,11 +41,6 @@ $(function(){
 
   removeGlobalLoading();
   renderJqueryFileUpload();
-  renderTokens();
   resetNestedFieldDestroy();
 });
-
-function renderTokens() {
-  // body...
-}
 

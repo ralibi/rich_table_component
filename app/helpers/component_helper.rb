@@ -164,7 +164,7 @@ module ComponentHelper
 
   # Needed for constructing dot format in recapitulation matrix
   def mapping_label(arr)
-    arr.unshift('mapping').flatten.join('.')
+    [['mapping'] + arr].flatten.join('.')
   end
 
   def render_rtc(options)
