@@ -28,13 +28,12 @@
           %Data{"ss:Type" => "String"}= "Tabel " + t(rtc_controller_name.classify.underscore)
       %Row{"ss:Index" => "3"}
         - params[:export_attribute_ids].each do |att|
-          - attribute = att.to_s
           %Cell{"ss:StyleID" => "Header"}
-            %Data{"ss:Type" => "String"}= t((attribute.split('.').last(2) - ['to_s']).join('_').presence || @rtc_controller_name.klass.name.underscore)
+            %Data{"ss:Type" => "String"}= att.split(';').first
       - @rtc_controller_name.each do |rtc|
         %Row
           - params[:export_attribute_ids].each do |att|
-            - attribute = att.to_s
+            - attribute = att.split(';').last
             - splitter = attribute.split('.')
             - splitter.unshift(rtc)
             - val = splitter.inject do |ret, n| 

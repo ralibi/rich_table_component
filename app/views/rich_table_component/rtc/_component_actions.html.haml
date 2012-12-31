@@ -54,16 +54,17 @@
             = t("data")
           - export_attributes.each do |ea|
             - if ea.instance_of?(Hash)
-              attribute = ea.keys.first.to_s
+              - attribute_value = ea[:value].to_s
+              - attribute_label = ea[:label]
             - else
-              - attribute = ea.to_s
-              - splitter = attribute.split('.')
-            - splitter = attribute.split('.')
-            - attribute_name = t((splitter.last(2) - ['to_s']).join('_').presence || the_klass_name.underscore)
+              - attribute_value = ea.to_s
+              - splitter = attribute_value.split('.')
+              - attribute_label = t((splitter.last(2) - ['to_s']).join('_'))
+
             .controls
               %label.checkbox
-                = check_box_tag 'export_attribute_ids[]', ea, true
-                = t(attribute_name)
+                = check_box_tag 'export_attribute_ids[]', "#{attribute_label};#{attribute_value}", true
+                = attribute_label
         .form-actions
           %button{type: 'submit', class: "btn btn btn-large btn-primary btn_submit"}
             = t("export")
