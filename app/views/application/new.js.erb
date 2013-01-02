@@ -1,7 +1,7 @@
 $('.modal, .modal-backdrop').remove();
 
 <% params[:remote] = true if params[:remote].nil? %>
-<% params[:next_remote] = true if params[:next_remote].nil? %>
+<% params[:next_remote] = params[:remote] if params[:next_remote].nil? %>
 
 var $modal = $('<%= j(render "new") %>');
 $modal.modal();
