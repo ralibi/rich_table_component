@@ -140,7 +140,7 @@ module RichTableComponent
           relation = relation.page(params[:page].to_i).per_page(params[:per_page].to_i)
         end
 
-        relation = relation.group("#{_relation_table_name}.id")
+        relation = relation.uniq
         relation
       end
 
