@@ -59,7 +59,10 @@
             - else
               - attribute_value = ea.to_s
               - splitter = attribute_value.split('.')
-              - attribute_label = t((splitter.last(2) - ['to_s']).join('_'))
+              - attribute_label = (splitter.last(2) - ['to_s']).join('_')
+              - if attribute_label.split('_to_s').one?
+                - attribute_label = attribute_label.split('_to_s').first
+              - attribute_label = t(attribute_label)
 
             .controls
               %label.checkbox
