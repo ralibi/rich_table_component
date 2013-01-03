@@ -62,6 +62,8 @@
               - attribute_label = (splitter.last(2) - ['to_s']).join('_')
               - if attribute_label.split('_to_s').one?
                 - attribute_label = attribute_label.split('_to_s').first
+              - if attribute_label.split('_to_s_code').one?
+                - attribute_label = attribute_label.split('_to_s_code').first
               - attribute_label = t(attribute_label)
 
             .controls
