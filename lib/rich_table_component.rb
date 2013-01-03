@@ -20,6 +20,8 @@ require 'will_paginate/view_helpers/link_renderer'
 require 'will_paginate/view_helpers/action_view'
 require 'pagination_list_link_renderer'
 
+require 'rich_table_component/core_extensions/string'
+
 module RichTableComponent
   def self.ipsum
     "Lorem ipsum dolor sit amet, consectetur adipisicing vicerus luctum ...."
@@ -599,16 +601,18 @@ module RichTableComponent
         ActionController::Base.send :helper, TranslationsHelper
         ActionController::Base.send :helper, MenusHelper
         ActionController::Base.send :helper, DocumentsHelper
+
+        ActionController::Base.send :include, RichTableComponent::Controller
+
+
       end
     end
-
   end
-
 
 
 
 end
 
 
-::ActionController::Base.send :include, RichTableComponent::Controller
+
 
