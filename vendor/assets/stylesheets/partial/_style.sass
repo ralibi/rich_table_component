@@ -46,7 +46,7 @@ img
 body
   background: $body_bgcolor
   font: $main_font_size $main_font_family
-  color: $main_text_color
+  color: $first_color
 
   #wrapper
     background: $body_bgcolor url($images_dir + "unm_pinisi.png") no-repeat center bottom
@@ -225,7 +225,7 @@ body
               .continue_reading_part
                 font-size: $main_font_size * 0.9
                 font-style: italic
-                color: lighten($main_text_color, 50)
+                color: lighten($first_color, 50)
                 &:hover
                   color: $third_color
 
@@ -274,7 +274,7 @@ body
                   .part_label
                     margin-right: 5px
                   .part_value
-                    color: $main_text_color
+                    color: $first_color
                     background-color: mix($thin_color, white, 25)
                     padding: 1px 5px
                     +border-radius(8px)
@@ -310,7 +310,7 @@ body
                 .button_part
                   margin-left: 5px
                   .part_value
-                    color: $main_text_color
+                    color: $first_color
                     background-color: none
                     padding: 0
                     +border-radius(none)

@@ -623,6 +623,12 @@ var initExportButton = function(){
       $el.find('input').each(function(){
         $(this).clone().appendTo($the_form.find('.hide'));
       });
+
+      $el.find('select').each(function(i){
+        var select = this;
+        $(this).clone().appendTo($the_form.find('.hide'));
+        $the_form.find('.hide').find('select').eq(i).val($(select).val());
+      });
     }
     else{
       $elmt.find('.rtc_search #search').clone().appendTo($the_form.find('.hide'));
