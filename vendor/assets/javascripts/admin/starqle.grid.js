@@ -699,7 +699,9 @@ var initActiveTab = function(){
 var initRecapitulation = function(){
   // 
   $('.recapitulation_form').live('ajax:beforeSend', function(event, xhr, settings){
-    $(this).parent('.well').find('.recapitulation_result').html('Mengkalkulasi rekapitulasi...');
+    $(this).parent('.well').find('.recapitulation_result').remove();
+    var $recapitulation_result = $('<div>Mengkalkulasi rekapitulasi...</div>').addClass('recapitulation_result');
+    $(this).parent('.well').append($recapitulation_result);
     if(settings.url.indexOf('&export_pdf=') > 0){
       settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?');
       location.href = settings.url + '&format=pdf';
