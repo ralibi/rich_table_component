@@ -670,3 +670,25 @@ a[rel=popover]
   &:hover
     padding: 4px 20px 5px
 
+
+
+
+
+
+
+
+
+
+
+.uneditable-input, .uneditable-textarea
+  > .part
+    font-size: $main_font_size
+
+    .part_label
+      margin-right: 5px
+      font-weight: bold
+      &:after
+        content: ':'
+    .part_value
+      > i
+        color: darken($thin_color, 30%)

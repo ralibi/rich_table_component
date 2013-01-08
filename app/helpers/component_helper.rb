@@ -157,9 +157,9 @@ module ComponentHelper
   end
 
   def time_period(sdate, edate)
-    strsdate = sdate.present? ? (mdate sdate) : "-"
-    stredate = edate.present? ? (mdate edate) : "-"
-    "#{strsdate} #{t('to')} #{stredate}"
+    strsdate = sdate.present? ? (mdate sdate) : "..."
+    stredate = edate.present? ? (mdate edate) : "..."
+    "#{strsdate} - #{stredate}"
   end
 
   # Needed for constructing dot format in recapitulation matrix
