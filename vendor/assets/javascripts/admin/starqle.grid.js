@@ -417,8 +417,15 @@ var renderMultipleTokensById = function(token, url, min_chars){
     console.log('called renderMultipleTokensById(): ' + token_id);
     $(this).tokenInput(url, {
       propertyToSearch: "name",
-      resultsFormatter: function(item){ var code = item.code == undefined ? '' : item.code; var avatar = item.avatar_resource_tiny == undefined ? '' : "<img src='" + item.avatar_resource_tiny + "' title='" + item.name + " " + code + "' height='25px' width='25px' />"; return "<li>" + avatar + "<div style='display: inline-block; padding-left: 10px;'><div class='name'>" + item.name + " " + code + "</div></div></li>" },
-      tokenFormatter: function(item) { var code = item.code == undefined ? '' : item.code; return "<li><p>" + item.name + " " + code + "</p></li>" },
+      resultsFormatter: function(item){ 
+        var code = item.code == undefined ? '' : item.code; 
+        var avatar = item.avatar_resource_tiny == undefined ? '' : "<img src='" + item.avatar_resource_tiny + "' title='" + item.name + " " + code + "' height='25px' width='25px' />"; 
+        return "<li>" + avatar + "<div style='display: inline-block; padding-left: 10px;'><div class='name'>" + code + " - " + item.name + "</div></div></li>";
+      },
+      tokenFormatter: function(item) { 
+        var code = item.code == undefined ? '' : item.code; 
+        return "<li><p>" + code + " - " + item.name + "</p></li>";
+      },
       theme: 'bootstrap',
       minChars: (min_chars == undefined ? 2 : min_chars),
       preventDuplicates: true,
@@ -433,8 +440,15 @@ var renderSingleTokensById = function(token, url, min_chars){
     console.log('called renderSingleTokensById(): ' + token_id);
     $(this).tokenInput(url, {
       propertyToSearch: "name",
-      resultsFormatter: function(item){ var code = item.code == undefined ? '' : item.code; var avatar = item.avatar_resource_tiny == undefined ? '' : "<img src='" + item.avatar_resource_tiny + "' title='" + item.name + " " + code + "' height='25px' width='25px' />"; return "<li>" + avatar + "<div style='display: inline-block; padding-left: 10px;'><div class='name'>" + item.name + " " + code + "</div></div></li>" },
-      tokenFormatter: function(item) { var code = item.code == undefined ? '' : item.code; return "<li><p>" + item.name + " " + code + "</p></li>" },
+      resultsFormatter: function(item){ 
+        var code = item.code == undefined ? '' : item.code; 
+        var avatar = item.avatar_resource_tiny == undefined ? '' : "<img src='" + item.avatar_resource_tiny + "' title='" + item.name + " " + code + "' height='25px' width='25px' />"; 
+        return "<li>" + avatar + "<div style='display: inline-block; padding-left: 10px;'><div class='name'>" + code + " - " + item.name + "</div></div></li>";
+      },
+      tokenFormatter: function(item) { 
+        var code = item.code == undefined ? '' : item.code; 
+        return "<li><p>" + code + " - " + item.name + "</p></li>";
+      },
       theme: 'bootstrap',
       tokenLimit: 1,
       minChars: (min_chars == undefined ? 2 : min_chars),

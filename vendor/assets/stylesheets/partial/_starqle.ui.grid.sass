@@ -10,7 +10,7 @@ $separator_border_left: $table_border_color
 $separator_border_right: transparentize(white, 0.1)
 
 
-.rich_table_component
+.rich_table_component, .static_table_component
 
   .rtc_actions
     margin-bottom: 5px
@@ -42,7 +42,6 @@ $separator_border_right: transparentize(white, 0.1)
       vertical-align: top
       padding: 4px 10px
       overflow: hidden
-      +box-shadow(0 -1px 0 0 $table_border_color inset)
       +border-radius(4px 4px 0 0)
 
       .rtc_title
@@ -108,6 +107,7 @@ $separator_border_right: transparentize(white, 0.1)
 
     // RTC CONTENT ====================================================================================
     .rtc_content
+      border-top: solid 1px transparentize(black, 0.95)
       .rtc_grid_header
         clear: both
         overflow: hidden
