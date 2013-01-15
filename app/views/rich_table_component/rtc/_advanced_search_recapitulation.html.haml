@@ -22,7 +22,8 @@
   - label_name ||= [splitter.last, attribute_name].compact.join('_')
 
   - if att_params.present?
-    = f.input "#{underscore_attribute}_eq".to_sym, att_params.merge!({required: false})
+    - ransack_predicate = (att_params[:ransack_predicate].presence || :eq).to_s
+    = f.input "#{underscore_attribute}_#{ransack_predicate}".to_sym, att_params.merge!({required: false})
   - else
 
     - case attribute_type

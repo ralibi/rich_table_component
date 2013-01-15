@@ -1,9 +1,10 @@
 - rtc_controller_name ||= controller_name
 - the_klass = instance_variable_get("@#{rtc_controller_name}").klass
 - search_key ||= 'q'
+- search_action ||= search_action
 - advanced_search_attributes ||= nil
 
-= simple_form_for instance_variable_get("@#{search_key}"), as: search_key.to_sym, url: '#', html: {method: :get, id: "#{rtc_controller_name}_advanced_search", class: 'rtc_advanced_search form-horizontal'}, remote: true do |f|
+= simple_form_for instance_variable_get("@#{search_key}"), as: search_key.to_sym, url: search_action.presence || '#', html: {method: :get, id: "#{rtc_controller_name}_advanced_search", class: 'rtc_advanced_search form-horizontal'}, remote: true do |f|
   - advanced_search_attributes.compact.each do |att|
 
     - # Check attribute type, then breakdown att
@@ -25,7 +26,8 @@
     - label_name ||= [splitter.last, attribute_name].compact.join('_')
 
     - if att_params.present?
-      = f.input "#{underscore_attribute}_eq".to_sym, att_params.merge!({required: false})
+      - ransack_predicate = (att_params[:ransack_predicate].presence || :eq).to_s
+      = f.input "#{underscore_attribute}_#{ransack_predicate}".to_sym, att_params.merge!({required: false})
     - else
 
       - case attribute_type

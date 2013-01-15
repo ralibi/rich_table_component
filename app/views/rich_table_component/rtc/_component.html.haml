@@ -1,5 +1,6 @@
 - rtc_controller_name ||= controller_name
 - search_constraint ||= nil
+- search_action ||= nil
 - search_key ||= 'q'
 - rtc_title = true if rtc_title.nil?
 - rtc_header = true if rtc_header.nil?
@@ -35,6 +36,7 @@
   
   = render "rich_table_component/rtc/component_content", 
     search_constraint: search_constraint, 
+    search_action: search_action,
     search_key: search_key,
     headers: headers, 
     rtc_header: rtc_header,

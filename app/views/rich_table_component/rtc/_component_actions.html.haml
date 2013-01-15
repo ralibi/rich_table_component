@@ -1,6 +1,6 @@
 - rtc_controller_name ||= controller_name
 - rtc_title = true if rtc_title.nil?
-- the_klass = instance_variable_get("@#{rtc_controller_name}").klass
+- the_klass = instance_variable_get("@#{rtc_controller_name}").respond_to?(:klass) ? instance_variable_get("@#{rtc_controller_name}").klass : Array
 - the_klass_name = the_klass.name
 - add_form_remote = true if add_form_remote.nil?
 - rtc_button_new = true if rtc_button_new.nil?

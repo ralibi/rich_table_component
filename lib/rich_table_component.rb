@@ -292,6 +292,7 @@ module RichTableComponent
                       .joins{gd_col[:splitter].inject((gd_col[:splitter].present? ? self : nil), :__send__)}
 
 
+        params[:q] = params[:q].each_with_object({}){|i, memo| i.first.to_s.end_with?('_present') && i.last.eql?('0') ? memo[(i.first.to_s[0..-9] + '_blank').to_sym] = '1' : memo[i.first] = i.last}
         @q = q_join_table.search(params[:q])
         join_table = @q.result
 

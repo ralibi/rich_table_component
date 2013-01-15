@@ -1,6 +1,7 @@
 - rtc_controller_name ||= controller_name
 - toggle_view = false if toggle_view.nil?
 - rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
+- search_action ||= search_action
 - search_key ||= 'q'
 - advanced_search_attributes ||= nil
 - table_title ||= nil
@@ -16,8 +17,7 @@
     
   - if search_constraint.present?
     .rtc_item.right
-      = search_form_for instance_variable_get("@#{search_key}"), as: search_key.to_sym, url: '#', html: {method: :get, class: "rtc_search input-append", style: 'margin-bottom: 0px'}, remote: true do |f|
-
+      = search_form_for instance_variable_get("@#{search_key}"), as: search_key.to_sym, url: search_action.presence || '#', html: {method: :get, class: "rtc_search input-append", style: 'margin-bottom: 0px'}, remote: true do |f|
         - new_params = Hash.new
         - new_params.merge! params
         - if search_constraint.instance_of?(Hash) && search_constraint[:params].present?
@@ -50,6 +50,7 @@
   .rtc_header_expanded
     - if advanced_search_attributes.present?
       = render "rich_table_component/rtc/advanced_search",
+        search_action: search_action,
         search_key: search_key, 
         rtc_controller_name: rtc_controller_name, 
         advanced_search_attributes: advanced_search_attributes,

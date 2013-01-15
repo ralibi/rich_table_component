@@ -5,6 +5,7 @@
 - rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
 - toggle_view = false if toggle_view.nil?
 - rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
+- search_action ||= nil
 - search_key ||= 'q'
 - advanced_search_attributes ||= nil
 - columns_width = columns_width.presence || []
@@ -14,6 +15,7 @@
   - if rtc_header.present?
     = render "rich_table_component/rtc/header", 
       search_constraint: search_constraint.presence || nil,
+      search_action: search_action, 
       search_key: search_key, 
       rtc_controller_name: rtc_controller_name, 
       rtc_partial: rtc_partial, 
