@@ -8,13 +8,15 @@
   - params.select{|key, val| key != "action" && key != "controller" && key.to_s != "q"}.each_pair do |key, val|
     = hidden_field_tag key.to_s, val.to_s
   
+
 %table
   - if @controller_names.present?
+    - offset = (params[:page].to_i - 1) * params[:per_page].to_i
     - unless params[:list_view].eql? 'th'
-      = render partial: rtc_partial, collection: @controller_names
+      = render partial: rtc_partial, collection: @controller_names, locals: {offset: offset, rtc_partial: rtc_partial}
     - else
       %ul
-        = render partial: rtc_partial, collection: @controller_names
+        = render partial: rtc_partial, collection: @controller_names, locals: {offset: offset, rtc_partial: rtc_partial}
   - else
     .rtc_empty_message
       %br

@@ -32,6 +32,12 @@
           
           
 
+  - if selection_actions.present?
+    - selection_actions = [selection_actions].flatten
+    - selection_actions.each do |sa|
+      = form_tag sa[:form][:path], sa[:form][:options]  do
+        = submit_tag sa[:action_button][:value], sa[:action_button][:options]
+
 
 
 

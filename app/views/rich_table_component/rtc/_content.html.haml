@@ -6,15 +6,23 @@
 
 .rtc_content  
   .rtc_grid_header{style: (rtc_column_header.present? ? '' : 'display: none !important')}
-    - if columns_width.present?
-      - headers.each_with_index do |header, i|
-        .rtc_gh_item{'data-column-width' => columns_width[i]}
-          = header.present? ? sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial) : raw("&nbsp;")
-    - else
-      - headers.each do |header|
-        .rtc_gh_item
-          = header.present? ? sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial) : raw("&nbsp;")
-        
+    - columns_width ||= Array.new(headers.count, 1)
+
+
+    - if selection_checkbox
+      .rtc_gh_item.numeric{'data-column-width' => columns_width.inject(:+) / 20.0}
+        %span{style: 'padding: 2px 0px'}
+          = check_box_tag 'rtc_select_all', nil, false, class: 'rtc_select_all', style: 'height: 0px; margin-top: 0px;'
+
+    - if row_number
+      .rtc_gh_item{'data-column-width' => columns_width.inject(:+) / 20.0}
+        %span
+          = 'No.'
+
+    - headers.each_with_index do |header, i|
+      .rtc_gh_item{'data-column-width' => columns_width[i]}
+        = header.present? ? sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial) : raw("&nbsp;")
+
   .rtc_grid
     = render "rich_table_component/rtc/table", 
       rtc_controller_name: rtc_controller_name, 

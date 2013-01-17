@@ -179,6 +179,26 @@ module ComponentHelper
     render partial: 'rich_table_component/rtc/recapitulation_matrix', locals: options
   end
 
+  def row_selection obj
+    result = '<td class="numeric rtc_row_number">'
+    result << (check_box_tag "#{obj.class.name.downcase}[#{obj.id}]", nil, false, class: 'rtc_row_select', style: 'height: 0px; margin-top: 0px; margin-right: 7px;')
+    result << '</td>'
+
+    result.html_safe
+  end
+
+  def row_number offset = nil, counter = nil
+    result = '<td class="numeric rtc_row_number">'
+    if offset
+      result << "#{counter + offset + 1}."
+    else
+      result << '#'
+    end
+    result << '</td>'
+
+    result.html_safe
+  end
+
 end
 
 
