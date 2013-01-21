@@ -9,6 +9,14 @@
 - rtc_actions ||= nil
 
 .rtc_actions
+
+  - if multiple_selection_actions.present?
+    - multiple_selection_actions = [multiple_selection_actions].flatten
+    - multiple_selection_actions.each do |sa|
+      = form_tag sa[:form][:path], sa[:form][:options].merge({class: 'multiple_selection_form'})  do
+        = submit_tag sa[:action_button][:value], sa[:action_button][:options]
+
+
   - if rtc_button_new.eql?(true) || rtc_button_new.eql?('true')
     - if rtc_controller_name != controller_name || instance_variable_get("@#{controller_name.singularize}").nil?
       = link_to icon('plus', 'Tambah ' + t("#{the_klass_name.tableize.singularize}").titleize).html_safe, 
@@ -23,20 +31,12 @@
 
 
 
-
-
   - if rtc_actions.present?
     - rtc_actions = [rtc_actions].flatten
     - rtc_actions.each do |rtc_action|
       = rtc_action
           
           
-
-  - if selection_actions.present?
-    - selection_actions = [selection_actions].flatten
-    - selection_actions.each do |sa|
-      = form_tag sa[:form][:path], sa[:form][:options]  do
-        = submit_tag sa[:action_button][:value], sa[:action_button][:options]
 
 
 

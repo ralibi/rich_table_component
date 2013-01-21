@@ -87,6 +87,8 @@ module RichTableComponent
 
       # The result from Rich Table Component manipulation
       def rich_table_component(relation = {}, _sort_column = {}, _sort_direction = nil, pagination = true)
+
+        #puts 'RICH TABLE COMPONENT'
         case relation
         when Hash
           _sort_column = relation[:sort_column]
@@ -111,7 +113,7 @@ module RichTableComponent
         @sort_direction = _sort_direction
         sort = sort_column
         direction = sort_direction
-        _relation_table_name = relation.respond_to?('klass') ? relation.klass.name.tableize : relation.name.tableize
+        _relation_table_name = relation.respond_to?('klass') ? relation.klass.table_name : relation.name.tableize
         @default_sort = nil
         @sort_direction = nil
 
@@ -170,7 +172,7 @@ module RichTableComponent
       # Group methods for recapitulation
       # -------------------------------
       def get_group_db(splitter, splitter_attr, splitter_time, group_attr, join_model, recapitulation_model)
-        group_db = [splitter.last.try('tableize'), group_attr].compact.join('.')
+        group_db = [splitter.last.try('classify').try('constantize').try('table_name'), group_attr].compact.join('.')
         group_db = (group_db.split('.').length > 1) ? group_db : [recapitulation_model.table_name, group_db].join('.')
 
         if splitter_time.present?
@@ -213,6 +215,8 @@ module RichTableComponent
         group = splitter.pop
         join_model = splitter.present? ? splitter.last.classify.constantize : recapitulation_model
         group_attr = join_model.columns_hash[group].present? ? group : group + '_id'
+        #puts group_attr
+        group_attr = join_model.columns_hash[group_attr].present? ? group_attr : group.classify.constantize.table_name.singularize + '_id'
         group_db = get_group_db(splitter, splitter_attr, splitter_time, group_attr, join_model, recapitulation_model)
         splitter_mapping = splitter_attr.find{|f| f.first(8).eql?('mapping.')}.try('split', '.')
 
@@ -230,6 +234,7 @@ module RichTableComponent
       end
 
       def get_label_record(group_data, join_table, as_group_db)
+        # puts 'GET LABEL RECORD'
         group_data[:is_id] ? group_data[:group].tableize.classify.constantize.where{id.in(join_table.select(group_data[:group_db]).order(group_data[:group_db].to_s + ' ASC').uniq.to_a.collect(&(group_data[:group_attr]).to_sym))} : join_table.select(group_data[:group_db] + ' AS ' + as_group_db).order(as_group_db + ' ASC').uniq
       end
 
@@ -260,6 +265,7 @@ module RichTableComponent
 
 
       def generate_recapitulation
+        #puts 'GENERATE RECAPITULATION'
         if params[:group_row].present? || params[:group_col].present?
           generate_recapitulation_start
         else
@@ -268,6 +274,7 @@ module RichTableComponent
       end
 
       def generate_recapitulation_start
+        #puts 'START RECAPITULATION'
         recapitulation_model = (params[:rtc_controller_name].presence || controller_name).classify.constantize
 
 
@@ -287,17 +294,25 @@ module RichTableComponent
         end
 
 
+        #puts 'JOIN TABLE'
         q_join_table = recapitulation_model
                       .joins{gd_row[:splitter].inject((gd_row[:splitter].present? ? self : nil), :__send__)}
                       .joins{gd_col[:splitter].inject((gd_col[:splitter].present? ? self : nil), :__send__)}
 
 
-        params[:q] = params[:q].each_with_object({}){|i, memo| i.first.to_s.end_with?('_present') && i.last.eql?('0') ? memo[(i.first.to_s[0..-9] + '_blank').to_sym] = '1' : memo[i.first] = i.last}
-        @q = q_join_table.search(params[:q])
-        join_table = @q.result
+        #puts 'CONVERT PRESENT QUEUE'
+        if params[:q].present?
+          params[:q] = params[:q].each_with_object({}){|i, memo| i.first.to_s.end_with?('_present') && i.last.eql?('0') ? memo[(i.first.to_s[0..-9] + '_blank').to_sym] = '1' : memo[i.first] = i.last}
+          @q = q_join_table.search(params[:q])
+          join_table = @q.result
+        else
+          join_table = q_join_table
+        end
 
         # executing query for counting record
+        #puts 'COUNTING RECORD'
         recapitulations = join_table.count(group: [gd_row[:group_db], gd_col[:group_db]].compact)
+        #puts 'END COUNTING RECORD'
 
 
         # executing query for value
@@ -312,6 +327,7 @@ module RichTableComponent
 
         # END DATA FETCHING
 
+        #puts 'END DATA FETCHING'
 
 
 
@@ -367,8 +383,7 @@ module RichTableComponent
         # DATA PROCESS
         # ----------------------------------------------------------------------------------------------------
         # ----------------------------------------------------------------------------------------------------
-
-
+        #puts 'DATA PROCESS'
 
         # iterate through rows and summing up matrix value simultanously
         # rows -> label top-bottom

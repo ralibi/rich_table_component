@@ -179,20 +179,26 @@ module ComponentHelper
     render partial: 'rich_table_component/rtc/recapitulation_matrix', locals: options
   end
 
-  def row_selection obj
-    result = '<td class="numeric rtc_row_number">'
-    result << (check_box_tag "#{obj.class.name.downcase}[#{obj.id}]", nil, false, class: 'rtc_row_select', style: 'height: 0px; margin-top: 0px; margin-right: 7px;')
+  def row_selection local_var_assignments, options = {}
+    obj = local_var_assignments["#{local_var_assignments[:rtc_partial]}".to_sym]
+    options[:visible] = true if options[:visible].nil?
+    result = '<td class="numeric rtc_row_select_cell">'
+    if options[:visible]
+      result << (check_box_tag "#{obj.class.name.tableize}[]", obj.id, false, class: 'rtc_row_select', style: 'height: 0px; margin-top: 0px; margin-right: 7px;')
+    end
     result << '</td>'
 
     result.html_safe
   end
 
-  def row_number offset = nil, counter = nil
+  def row_number local_var_assignments
+    counter = local_var_assignments["#{local_var_assignments[:rtc_partial]}_counter".to_sym].presence || 0
+    offset = local_var_assignments[:offset]
     result = '<td class="numeric rtc_row_number">'
     if offset
       result << "#{counter + offset + 1}."
     else
-      result << '#'
+      result << '(baru)'
     end
     result << '</td>'
 

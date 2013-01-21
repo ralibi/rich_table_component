@@ -9,7 +9,7 @@
     - columns_width ||= Array.new(headers.count, 1)
 
 
-    - if selection_checkbox
+    - if multiple_selection
       .rtc_gh_item.numeric{'data-column-width' => columns_width.inject(:+) / 20.0}
         %span{style: 'padding: 2px 0px'}
           = check_box_tag 'rtc_select_all', nil, false, class: 'rtc_select_all', style: 'height: 0px; margin-top: 0px;'

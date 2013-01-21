@@ -2,7 +2,10 @@
 <% controller_name_singular = rtc_controller_name.singularize %>
 <% @controller_name = instance_variable_get("@#{controller_name_singular}") %>
 
-var $new_item = $('<%= j(render :partial => params[:rtc_partial].presence || controller_name_singular, locals: {"#{controller_name_singular}".to_sym => @controller_name}) %>').st_formatRow().addClass('created');
+<% partial = params[:rtc_partial].presence || controller_name_singular %>
+<% partial_variable = partial.split('/').last %>
+
+var $new_item = $('<%= j(render partial, partial_variable.to_sym => @controller_name, rtc_partial: partial_variable) %>').st_formatRow().addClass('created');
 
 var $rtc = $('.rich_table_component.showing_new_form');
 $rtc.removeClass('showing_new_form');

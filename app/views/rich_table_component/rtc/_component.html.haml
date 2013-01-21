@@ -11,7 +11,7 @@
 - add_form_remote = true if add_form_remote.nil?
 - rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
 - rtc_button_new = true if rtc_button_new.nil?
-- rtc_selection_checkbox ||= nil
+- rtc_multiple_selection ||= nil
 - advanced_search_attributes ||= nil
 - columns_width = columns_width.presence || []
 - rtc_actions ||= nil
@@ -19,8 +19,8 @@
 - recapitulation_matrix ||= nil
 - table_title ||= nil
 - row_number = false if row_number.nil?
-- selection_checkbox = false if selection_checkbox.nil?
-- selection_actions ||= nil
+- multiple_selection = false if multiple_selection.nil?
+- multiple_selection_actions ||= nil
 
 .component.rich_table_component{class: "#{rtc_controller_name}_component"}
   - if rtc_title.present? || rtc_button_new.present?
@@ -35,7 +35,7 @@
     add_form_remote: add_form_remote, 
     rtc_button_new: rtc_button_new,
     rtc_actions: rtc_actions,
-    selection_actions: selection_actions,
+    multiple_selection_actions: multiple_selection_actions,
     export_attributes: export_attributes
   
   = render "rich_table_component/rtc/component_content", 
@@ -54,14 +54,14 @@
     columns_width: columns_width,
     table_title: table_title,
     row_number: row_number,
-    selection_checkbox: selection_checkbox,
+    multiple_selection: multiple_selection,
     params: params
 
-  / - if rtc_selection_checkbox
-  /   - if rtc_selection_checkbox[:action]
-  /     %form{action: rtc_selection_checkbox[:action], class: "rtc_selection_checkbox", id: "rtc_selection_checkbox_#{rtc_controller_name}"}
-  /       - if rtc_selection_checkbox[:label]
-  /         %input{type: 'submit', class: 'button', value: rtc_selection_checkbox[:label]}
+  / - if rtc_multiple_selection
+  /   - if rtc_multiple_selection[:action]
+  /     %form{action: rtc_multiple_selection[:action], class: "rtc_multiple_selection", id: "rtc_multiple_selection_#{rtc_controller_name}"}
+  /       - if rtc_multiple_selection[:label]
+  /         %input{type: 'submit', class: 'button', value: rtc_multiple_selection[:label]}
 
 
   - if recapitulation_matrix

@@ -2,7 +2,10 @@
 <% controller_name_singular = rtc_controller_name.singularize %>
 <% @controller_name = instance_variable_get("@#{controller_name_singular}") %>
 
-var $new_item = $('<%= j(render :partial => params[:rtc_partial].presence || controller_name_singular, locals: {"#{(params[:rtc_partial].presence || controller_name_singular).split('/').last}".to_sym => @controller_name}) %>').st_formatRow().addClass('updated');
+<% partial = params[:rtc_partial].presence || controller_name_singular %>
+<% partial_variable = partial.split('/').last %>
+
+var $new_item = $('<%= j(render partial, partial_variable.to_sym => @controller_name, rtc_partial: partial_variable) %>').st_formatRow().addClass('updated');
 
 // copy row number
 $row_number = $('.lvr_entry_edited').find('.rtc_row_number').html();
