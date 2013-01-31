@@ -179,7 +179,13 @@ module RichTableComponent
           case join_model.columns_hash[group_attr].type
           when :date
             old_since = splitter_time[2].eql?('old') ? "#{splitter_time[1]}(curdate()) - " : ""
-            group_db = "(#{old_since}#{splitter_time[1]}(#{group_attr}))"
+
+            if old_since.eql?("") && splitter_time[1].eql?('month')
+              group_db = "(concat(year(#{group_attr}), '/', LPAD(month(#{group_attr}), 2, '0')  ))" 
+            else
+              group_db = "(#{old_since}#{splitter_time[1]}(#{group_attr}))"  
+            end
+
             if splitter_time[3].presence
               group_db = "(floor((#{group_db}) / #{splitter_time[3].to_i}))"
             end
@@ -195,7 +201,7 @@ module RichTableComponent
 
       def get_as_group_db(group_db)
         as_group_db = "#{group_db.to_s.gsub('.', '__')}"
-        as_group_db = 'datetime_calculation' if as_group_db.index('curdate').present? || as_group_db.index('year(').present?
+        as_group_db = 'datetime_calculation' if as_group_db.index('curdate').present? || as_group_db.downcase.index('year(').present? || as_group_db.downcase.index('month(').present?
         as_group_db
       end
 
