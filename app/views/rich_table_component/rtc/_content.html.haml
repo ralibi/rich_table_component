@@ -21,7 +21,13 @@
 
     - headers.each_with_index do |header, i|
       .rtc_gh_item{'data-column-width' => columns_width[i]}
-        = header.present? ? sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial) : raw("&nbsp;")
+        - if header.present?
+          - if header.instance_of?(Array) && header.try(:first).nil?
+            %span= raw(t(header.try(:last)))
+          - else
+            = sort_link(header, rtc_controller_name: rtc_controller_name, params: params, rtc_partial: rtc_partial)
+        - else
+          = raw("&nbsp;")
 
   .rtc_grid
     = render "rich_table_component/rtc/table", 
