@@ -64,12 +64,12 @@
           .control-group.string.optional.range
             %label.string.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
             .controls
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_#{rtc_controller_name}_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
             %span.floating
               = t('to')
             .controls.floating
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_#{rtc_controller_name}_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
         - else
           = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
@@ -78,15 +78,15 @@
           .control-group.string.optional.range
             %label.string.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
             .controls
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_#{rtc_controller_name}_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
             %span.floating
               = t('to')
             .controls.floating
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_#{rtc_controller_name}_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
         - else
-          = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
+          = f.input "#{rtc_controller_name}_#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
 
   .form-actions
     %button{type: 'submit', class: 'btn btn-primary'}

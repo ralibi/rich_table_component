@@ -65,13 +65,13 @@
           .control-group.string.optional.range
             %label.string.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
             .controls
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_recap_#{recapitulation_model.tableize}_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
           .control-group.string.optional.range
             %label.string.optional.control-label
               = t('to')
             .controls
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_recap_#{recapitulation_model.tableize}_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
       - else
         = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
@@ -79,9 +79,9 @@
       - if range
         .range_input
           .control-group.string.optional.range
-            %label.string.optional.control-label{for: "q_#{attribute_name}_gteq"}= t(label_name)
+            %label.string.optional.control-label{for: "q_recap_#{recapitulation_model.tableize}_#{attribute_name}_gteq"}= t(label_name)
             .controls
-              %input.string.optional.datepicker{id: "q_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
+              %input.string.optional.datepicker{id: "q_recap_#{recapitulation_model.tableize}_#{attribute_name}_gteq", name: "q[#{attribute_name}_gteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
           .control-group.string.optional.range
             %label.string.optional.control-label
@@ -90,4 +90,4 @@
               %input.string.optional.datepicker{id: "q_#{attribute_name}_lteq", name: "q[#{attribute_name}_lteq]", size: "50", type: "text"}
                 %p.help-block DD-MM-YYYY
       - else
-        = f.input "#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
+        = f.input "recap_#{recapitulation_model.tableize}_#{underscore_attribute}_eq".to_sym, label: label_name, required: false, input_html: { class: 'datepicker' }, hint: 'DD-MM-YYYY'
