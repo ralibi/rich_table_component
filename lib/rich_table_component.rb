@@ -505,13 +505,13 @@ module RichTableComponent
         respond_to do |format|
           case act
           when :create
-            flash[:notice] = "#{obj.class.name.tableize} was successfully created."
+            flash[:notice] ||= "#{obj.class.name.tableize} was successfully created."
             format.html { redirect_to controller: obj.class.name.tableize, action: :edit, id: obj.id }
           when :update
-            flash[:notice] = "#{obj.class.name.tableize} was successfully updated."
+            flash[:notice] ||= "#{obj.class.name.tableize} was successfully updated."
             format.html { redirect_to controller: obj.class.name.tableize, action: :edit, id: obj.id }
           when :destroy
-            flash[:notice] = "#{obj.class.name.tableize} was successfully deleted."
+            flash[:notice] ||= "#{obj.class.name.tableize} was successfully deleted."
             format.html { redirect_to controller: obj.class.name.tableize, action: :index }
           else
             format.html # index.html.erb
@@ -549,10 +549,10 @@ module RichTableComponent
       def format_remote(format, act = action_name, obj = instance_variable_get("@#{controller_name}"), html_redirect = nil)
         case act
         when :create
-          flash[:notice] = "#{obj.class.name.tableize} was successfully created."
+          flash[:notice] ||= "#{obj.class.name.tableize} was successfully created."
           format.html { redirect_to controller: obj.class.name.tableize, action: html_redirect.presence || :edit, id: obj.id }
         when :update
-          flash[:notice] = "#{obj.class.name.tableize} was successfully updated."
+          flash[:notice] ||= "#{obj.class.name.tableize} was successfully updated."
           format.html { redirect_to controller: obj.class.name.tableize, action: html_redirect.presence || :edit, id: obj.id }
         else
           format.html { render action: act }
