@@ -17,6 +17,11 @@ $rtc.find('.rtc_empty_message').remove();
 
 $('.modal').modal('hide');
 
+<% if flash[:error].present? %>
+  showGlobalNotification('<%= flash[:error] %>', {type: ERROR});
+<% else %>
+  showGlobalNotification('<%= flash[:notice] %>', {type: SUCCESS});
+<% end %>
 
 <% flash[:error].try(:clear) %>
 <% flash[:notice].try(:clear) %>
