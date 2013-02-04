@@ -842,7 +842,8 @@ jQuery.fn.st_recapitulationMatrix = function(options){
     var $elmt = jQuery(this);
 
     var columns = '';
-    label_col = opts.recapitulation_matrix.shift();
+    var copy_recapitulation_matrix = $.extend(true, [], opts.recapitulation_matrix);
+    label_col = copy_recapitulation_matrix.shift();
     for(var i=0; i<label_col.length; i++){
       columns += '<div class="rtc_gh_item" title="' + label_col[i] +  '"><a>' + label_col[i] + '</a></div>';
     }
@@ -881,7 +882,7 @@ jQuery.fn.st_recapitulationMatrix = function(options){
     markup.append(list_view_row);
 
     $.template( 'entry_template', markup );
-    $.tmpl( 'entry_template', opts.recapitulation_matrix ).appendTo( $elmt.find('.rtc_content .rtc_grid > table') );
+    $.tmpl( 'entry_template', copy_recapitulation_matrix ).appendTo( $elmt.find('.rtc_content .rtc_grid > table') );
 
     $elmt.find('.component_content').st_tableGrid();
 
