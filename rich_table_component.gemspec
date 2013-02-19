@@ -31,5 +31,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'wicked_pdf'
 
   gem.add_dependency 'compass-rails'  
-  gem.add_dependency 'twitter-bootstrap-rails'
+  gem.add_dependency 'twitter-bootstrap-rails', '2.2.4'
 end
