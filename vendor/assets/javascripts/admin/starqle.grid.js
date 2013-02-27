@@ -89,7 +89,7 @@ var ajaxifyTableGrid = function(){
       params.page = $pagination.find('input').val();
       $href = $(this).parents('.pagination').find('a').eq(0).get(0).href;
     }
-    //params.per_page = $pagination.find('select').val();
+    params.per_page = $.cookie('unm_pp');
     if($elmt.find('input#search').val() != '') {
       params.search = $elmt.find('input#search').val(); 
     }
@@ -114,6 +114,7 @@ var ajaxifyTableGrid = function(){
     });
     
     var params = {};
+    params.per_page = $.cookie('unm_pp');
     if($elmt.find('input#search').val() != ''){
       params = getSerializeArray($elmt.find('input#search').serializeArray());
     }
@@ -128,8 +129,6 @@ var ajaxifyTableGrid = function(){
   }).live('ajax:success', function(){
     var $ths = $(this);
     var $elmt = $(this).parents('.rich_table_component');
-    $select = $elmt.find('.pagination_area').find('select[name=per_page]');
-    $select.find('option').filter(function(index) { return $(this).text() === $select.attr('data_value'); }).attr('selected', true);
     
     $elmt.find('.rtc_gh_item a').removeClass('asc').removeClass('desc');
     if($ths.attr('href').indexOf("=asc") != -1){
@@ -165,12 +164,14 @@ var ajaxifyTableGrid = function(){
 
     var params = getSerializeArray($elmt.find('form#filter_form').serializeArray());
     $.extend(params, getSerializeArray($(this).serializeArray()));
-    params['page'] = 1;
+    params.page = 1;
+    params.per_page = $.cookie('unm_pp');
     
     var $this_button = $ths.find('input[type=submit]');
     if($this_button.is('.disabled, .pressed')){return false;}
     $this_button.addClass('pressed');
     
+    settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + $.param(params);
   }).live('ajax:success', function(){
     var $this_button = $(this).find('input[type=submit]');
     $this_button.removeClass('pressed');
@@ -230,7 +231,7 @@ var ajaxifyTableGrid = function(){
   // SEARCHING (advanced)
   $(
     'form.rtc_advanced_search'
-  ).live('ajax:before', function(){
+  ).live('ajax:beforeSend', function(event, xhr, settings){
     var $el = $(this);
     var $elmt = $(this).parents('.rich_table_component');
     $('.rich_table_component.updating').removeClass('updating');
@@ -246,11 +247,16 @@ var ajaxifyTableGrid = function(){
       $(this).clone().appendTo($adv_ff);
     });
     $adv_ff.find('input[name=page]').val('1');
+    $adv_ff.find('input[name=per_page]').val($.cookie('unm_pp'));
 
     $elmt.st_tableGrid_loading({
       message: t("searching"),
       image: LOADING_IMAGE
     });
+    
+    params.page = 1;
+    params.per_page = $.cookie('unm_pp');
+    settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + $.param(params);
   }).live('ajax:complete', function(event, xhr, status){
     var $el = $(this);
     $el.find('.advanced_filter_form').remove();
@@ -295,6 +301,20 @@ var ajaxifyTableGrid = function(){
   initActiveTab();
   initRecapitulation();
   initMultipleSelection();
+
+  initCookies();
+};
+
+var initCookies = function(){
+  if($.cookie('unm_pp') == undefined){
+    $.cookie('unm_pp', $('.per_page_part').find('select').val());
+  }
+  $('.per_page_part').live('change', function(){
+    var $elmt = $(this).parents('.rich_table_component');
+    $.cookie('unm_pp', $(this).find('select').val());
+    $elmt.find('.go_to_page_part').find('input').val(1);
+    $elmt.find('.gotopage').trigger('click');
+  });
 };
 
 

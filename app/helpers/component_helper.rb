@@ -205,6 +205,27 @@ module ComponentHelper
     result.html_safe
   end
 
+
+  def fake_pagination(rtc_controller_name)
+    per_page_options = [5, 10, 20, 50, 100, 200]
+    result = '<div class="pagination">'
+    result += '<span class="first_page disabled">&lt;&lt;</span>'
+    result += '<span class="previous_page disabled">&lt;</span>'
+    result += '<div class="current_page_part">Hal. 1 dari 1'
+    result += '</div>'
+    result += '<span class="previous_page disabled">&lt;</span>'
+    result += '<span class="last_page disabled">&gt;&gt;</span>'
+    result += '<div class="per_page_part">'
+    result += (select_tag 'per_page', (per_page_options.map{|m| "<option #{(m==params[:per_page].to_i ? 'selected=selected' : '')}>#{m}</option>"}.join.html_safe))
+    result += '</div>'
+    result += '<div class="go_to_page_part">'
+    result += '<input type="text" value="1" name="page">'
+    result += (link_to "Go", {controller: rtc_controller_name}, remote: true, class: "gotopage btn-mini")
+    result += 'Pedr hal.</div>'
+    result += '</div>'
+    result.html_safe
+  end
+
 end
 
 

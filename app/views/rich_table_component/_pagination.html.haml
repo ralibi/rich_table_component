@@ -2,7 +2,7 @@
 - @controller_names = instance_variable_get("@#{rtc_controller_name}")
 - if @controller_names.respond_to?(:total_pages)
   - if @controller_names.length > 0
-    = will_paginate(@controller_names, :renderer => PaginationListLinkRenderer, params: params, remote: true, :page => params[:page], :per_page => params[:per_page].presence || @controller_names.per_page)
+    = will_paginate(@controller_names, :renderer => PaginationListLinkRenderer, params: params, remote: true, :page => params[:page], :per_page => params[:per_page].presence || @controller_names.per_page) || fake_pagination(rtc_controller_name)
     .page_entries_info
       = page_entries_info @controller_names
       

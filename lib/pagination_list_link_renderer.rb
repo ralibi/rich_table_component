@@ -18,8 +18,7 @@ class PaginationListLinkRenderer < WillPaginate::ActionView::LinkRenderer
   protected
 
     def pagination
-      #[ :first_page, :previous_page, :current_page_info, :next_page, :last_page, :per_page_navigator, :input_page_navigator ]
-      [ :first_page, :previous_page, :current_page_info, :next_page, :last_page, :input_page_navigator ]
+      [ :first_page, :previous_page, :current_page_info, :next_page, :last_page, :per_page_navigator, :input_page_navigator ]
     end
 
     def first_page
@@ -39,8 +38,8 @@ class PaginationListLinkRenderer < WillPaginate::ActionView::LinkRenderer
     end
     
     def per_page_navigator
-      per_page_options = [2, 5, 10, 20, 50, 100]
-      '<div class="per_page_part">' + (tag(:select, per_page_options.map{|m| "<option #{(m==@options[:per_page]? 'selected=selected' : '')}>#{m}</option>"}.join, :data_value => @options[:per_page], :name => "per_page").html_safe) + I18n.t("will_paginate.per_page") + '</div>'
+      per_page_options = [5, 10, 20, 50, 100, 200]
+      '<div class="per_page_part">' + (tag(:select, per_page_options.map{|m| "<option #{(m==@options[:per_page].to_i ? 'selected=selected' : '')}>#{m}</option>"}.join, :data_value => @options[:per_page], :name => "per_page").html_safe) + I18n.t("will_paginate.per_page") + '</div>'
     end
 
     def link(text, target, attributes = {})

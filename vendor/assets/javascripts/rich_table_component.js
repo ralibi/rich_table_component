@@ -15,6 +15,7 @@
 //= require jquery-ui-1.8.13.custom.min
 //= require jquery.tmpl.min
 //= require jquery.tokeninput
+//= require jquery.cookie
 //= require twitter/bootstrap
 //= require jquery.fileupload
 //= require jquery.fileupload-ui

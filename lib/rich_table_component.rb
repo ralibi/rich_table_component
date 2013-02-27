@@ -44,6 +44,12 @@ module RichTableComponent
     end
 
 
+      # get session per page for pagination
+      def session_per_page
+        session[:per_page] ||= DEFAULT_PER_PAGE
+      end
+
+
 
 
       # Removes leading and trailing whitespace from ransack search params
@@ -140,7 +146,8 @@ module RichTableComponent
 
         if pagination
           params[:page] ||= 1
-          params[:per_page] ||= WillPaginate.per_page
+          params[:per_page] ||= session_per_page
+          session[:per_page] = params[:per_page]
           relation = relation.page(params[:page].to_i).per_page(params[:per_page].to_i)
         end
 
