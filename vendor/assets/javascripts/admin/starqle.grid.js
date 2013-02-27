@@ -269,7 +269,13 @@ var ajaxifyTableGrid = function(){
   $('form.rtc_advanced_search .clear_advanced_search').live('click', function(){
     var $form = $(this).parents('form');
     $form.find('input').val('');
-    $form.submit();
+    
+    $form.find(':input')
+     .not(':button, :submit, :reset, :hidden')
+     .val('')
+     .removeAttr('checked')
+     .removeAttr('selected');
+
   });
 
   // HIDING ADVANCED SEARCH
@@ -321,8 +327,7 @@ var initCookies = function(){
 
 var clearAdvanceSearch = function(){
   $('form.rtc_advanced_search').find('input[type=text]').val('');
-  
-  $(':input', $('#advance_search form'))
+  $('form.rtc_advanced_search :input')
    .not(':button, :submit, :reset, :hidden')
    .val('')
    .removeAttr('checked')
