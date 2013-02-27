@@ -94,7 +94,7 @@ var ajaxifyTableGrid = function(){
       params.search = $elmt.find('input#search').val(); 
     }
     else{
-      params = $.extend(params, getSerializeArray($elmt.find('form.rtc_advanced_search input').serializeArray()));
+      params = $.extend(params, getSerializeArray($elmt.find('form.rtc_advanced_search :input').serializeArray()));
     }
     params.pgos = true;
     settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + $.param(params);
@@ -119,7 +119,7 @@ var ajaxifyTableGrid = function(){
       params = getSerializeArray($elmt.find('input#search').serializeArray());
     }
     else{
-      params = $.extend(params, getSerializeArray($elmt.find('form.rtc_advanced_search input').serializeArray()));
+      params = $.extend(params, getSerializeArray($elmt.find('form.rtc_advanced_search :input').serializeArray()));
     }
     
     $list_view = $elmt.find('.rtc_header .btn-group-view-toggle .btn.active').data('list-view');
@@ -253,7 +253,8 @@ var ajaxifyTableGrid = function(){
       message: t("searching"),
       image: LOADING_IMAGE
     });
-    
+
+    params = {};
     params.page = 1;
     params.per_page = $.cookie('unm_pp');
     settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + $.param(params);

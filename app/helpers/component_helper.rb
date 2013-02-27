@@ -217,11 +217,11 @@ module ComponentHelper
     result += '<span class="last_page disabled">&gt;&gt;</span>'
     result += '<div class="per_page_part">'
     result += (select_tag 'per_page', (per_page_options.map{|m| "<option #{(m==params[:per_page].to_i ? 'selected=selected' : '')}>#{m}</option>"}.join.html_safe))
-    result += '</div>'
+    result += 'Per hal. </div>'
     result += '<div class="go_to_page_part">'
     result += '<input type="text" value="1" name="page">'
     result += (link_to "Go", {controller: rtc_controller_name}, remote: true, class: "gotopage btn-mini")
-    result += 'Pedr hal.</div>'
+    result += '</div>'
     result += '</div>'
     result.html_safe
   end
