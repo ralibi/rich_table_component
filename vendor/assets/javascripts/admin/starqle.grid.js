@@ -61,7 +61,7 @@ var ajaxifyTableGrid = function(){
       params = getSerializeArray($elmt.find('input#search').serializeArray());
     }
 
-    $.extend(params, getSerializeArray($elmt.find('form#filter_form').serializeArray()));
+    // $.extend(params, getSerializeArray($elmt.find('form#filter_form').serializeArray()));
     params.list_view = $(this).data("list-view");
     
     settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + $.param(params);
@@ -162,8 +162,8 @@ var ajaxifyTableGrid = function(){
       image: LOADING_IMAGE
     });
 
-    var params = getSerializeArray($elmt.find('form#filter_form').serializeArray());
-    $.extend(params, getSerializeArray($(this).serializeArray()));
+    var params = {}; //getSerializeArray($elmt.find('form#filter_form').serializeArray());
+    // $.extend(params, getSerializeArray($(this).serializeArray()));
     params.page = 1;
     params.per_page = $.cookie('unm_pp');
     
@@ -232,35 +232,32 @@ var ajaxifyTableGrid = function(){
   $(
     'form.rtc_advanced_search'
   ).live('ajax:beforeSend', function(event, xhr, settings){
-    var $el = $(this);
     var $elmt = $(this).parents('.rich_table_component');
     $('.rich_table_component.updating').removeClass('updating');
     $elmt.addClass('updating')
     // 
     clearNormalSearch();
 
-    // append filter form
-    $el.find('.advanced_filter_form').remove();
-    $adv_ff = $('<div class="advanced_filter_form"></div>');
-    $adv_ff.appendTo($el);
-    $elmt.find('form#filter_form input').each(function(){
-      $(this).clone().appendTo($adv_ff);
-    });
-    $adv_ff.find('input[name=page]').val('1');
-    $adv_ff.find('input[name=per_page]').val($.cookie('unm_pp'));
 
     $elmt.st_tableGrid_loading({
       message: t("searching"),
       image: LOADING_IMAGE
     });
 
+    //console.log("ADVANCED SEARCH");
+    //return false;
+
     params = {};
+
+    $elmt.find('form#filter_form input').each(function(){
+      params[$(this).attr('name')] = $(this).attr('value')
+    });
+
     params.page = 1;
     params.per_page = $.cookie('unm_pp');
     settings.url += (settings.url.indexOf('?') >= 0 ? '&' : '?') + $.param(params);
   }).live('ajax:complete', function(event, xhr, status){
-    var $el = $(this);
-    $el.find('.advanced_filter_form').remove();
+    
   }).live("ajax:error", function(xhr, status, error){
     showGlobalNotification(translate(status.responseText), {type: ERROR});
   });
