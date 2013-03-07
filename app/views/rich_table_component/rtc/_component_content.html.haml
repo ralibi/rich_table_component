@@ -4,12 +4,12 @@
 - rtc_footer = true if rtc_footer.nil?
 - rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
 - toggle_view = false if toggle_view.nil?
-- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
 - search_action ||= nil
 - search_key ||= 'q'
 - advanced_search_attributes ||= nil
 - columns_width = columns_width.presence || []
 - table_title ||= nil
+- rtc_empty_data_message = sanitize "Data #{table_title.presence || t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
 
 .component_content
   - if rtc_header.present?
@@ -32,6 +32,7 @@
     rtc_partial: rtc_partial, 
     rtc_empty_data_message: rtc_empty_data_message,
     row_number: row_number,
+    table_title: table_title,
     multiple_selection: multiple_selection,
     columns_width: columns_width
   

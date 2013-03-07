@@ -1,7 +1,8 @@
 - rtc_controller_name ||= controller_name
 - rtc_column_header = true if rtc_column_header.nil?
 - rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
-- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
+- table_title ||= nil
+- rtc_empty_data_message = sanitize "Data #{table_title.presence || t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
 - columns_width = columns_width.presence || []
 
 .rtc_content  

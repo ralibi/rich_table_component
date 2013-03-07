@@ -9,7 +9,6 @@
 - rtc_partial = rtc_controller_name.singularize if rtc_partial.nil?
 - toggle_view = false if toggle_view.nil?
 - add_form_remote = true if add_form_remote.nil?
-- rtc_empty_data_message = sanitize "Data #{t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
 - rtc_button_new = true if rtc_button_new.nil?
 - rtc_multiple_selection ||= nil
 - advanced_search_attributes ||= nil
@@ -18,6 +17,7 @@
 - export_attributes ||= nil
 - recapitulation_matrix ||= nil
 - table_title ||= nil
+- rtc_empty_data_message = sanitize "Data #{table_title.presence || t(rtc_controller_name)} kosong" if rtc_empty_data_message.nil?
 - row_number = false if row_number.nil?
 - multiple_selection = false if multiple_selection.nil?
 - multiple_selection_actions ||= nil
