@@ -86,7 +86,7 @@ module ComponentHelper
 
   def button_delete(obj, opts = {})
     opts[:scope_params] ||= {}
-    ( link_to icon('trash'), {controller: obj.class.name.tableize, id: obj, action: :destroy}.merge(opts[:scope_params]), confirm: 'Apa and yakin?', method: :delete, remote: true, title: 'Hapus data', rel: 'tooltip', class: 'btn btn-mini btn-danger delete' ).html_safe
+    ( link_to icon('trash'), {controller: obj.class.name.tableize, id: obj, action: :destroy}.merge(opts[:scope_params]), confirm: 'Apakah Anda yakin?', method: :delete, remote: true, title: 'Hapus data', rel: 'tooltip', class: 'btn btn-mini btn-danger delete' ).html_safe
   end
 
   def button_edit_delete(obj)
