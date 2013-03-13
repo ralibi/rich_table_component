@@ -94,7 +94,9 @@ module MenusHelper
     elsif !controller_name.eql?('home')
       results << t("#{controller_name.singularize}")
     end
-    render 'rich_table_component/component/breadcrumbs', breadcrumbs: results, limit: limit
+    result = (render 'rich_table_component/component/breadcrumbs', breadcrumbs: results, limit: limit)
+    @parent_resources = nil
+    result
   end
   
 
