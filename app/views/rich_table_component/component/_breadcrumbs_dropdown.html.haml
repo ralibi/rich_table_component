@@ -1,4 +1,10 @@
 = breadcrumb[:current] 
+- puts '###############################'
+- puts breadcrumb[:parent_object].nil?
+- puts breadcrumb[:parent_object].present?
+- puts breadcrumb[:parent_object].class.name
+- puts breadcrumb[:resource]
+- puts '###############################'
 %ul.dropdown-menu
   - if breadcrumb[:parent_object].present?
     - if breadcrumb[:parent_object].respond_to?(breadcrumb[:resource])
