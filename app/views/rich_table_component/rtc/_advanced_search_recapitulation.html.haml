@@ -6,8 +6,9 @@
   - # Check attribute type, then breakdown att
   - case att
   - when Hash
-    - att_params = att[:params]
-    - att = att[:input]
+    - if att[:params].present?
+      - att_params = att[:params]
+      - att = att[:input]
 
   - attribute = att.to_s
   - range = true
