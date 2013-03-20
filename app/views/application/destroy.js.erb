@@ -7,3 +7,6 @@ setTimeout(function(){
     //decreasePagination($(this).parents('.st_table_grid'));
   });
 }, 500);
+
+<% flash[:error].try(:clear) %>
+<% flash[:notice].try(:clear) %>
