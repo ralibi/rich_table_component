@@ -188,9 +188,9 @@ module RichTableComponent
             old_since = splitter_time[2].eql?('old') ? "#{splitter_time[1]}(curdate()) - " : ""
 
             if old_since.eql?("") && splitter_time[1].eql?('month')
-              group_db = "(concat(year(#{group_attr}), '/', LPAD(month(#{group_attr}), 2, '0')  ))" 
+              group_db = "(concat(year(#{recapitulation_model.table_name}.#{group_attr}), '/', LPAD(month(#{recapitulation_model.table_name}.#{group_attr}), 2, '0')  ))" 
             else
-              group_db = "(#{old_since}#{splitter_time[1]}(#{group_attr}))"  
+              group_db = "(#{old_since}#{splitter_time[1]}(#{recapitulation_model.table_name}.#{group_attr}))"  
             end
 
             if splitter_time[3].presence
@@ -198,7 +198,7 @@ module RichTableComponent
             end
           when :datetime
             old_since = splitter_time[2].eql?('old') ? "{splitter_time[1]}(curdate()) - " : ""
-            group_db = "(#{old_since}#{splitter_time[1]}(#{group_attr}))"
+            group_db = "(#{old_since}#{splitter_time[1]}(#{recapitulation_model.table_name}.#{group_attr}))"
           else
           end
         end
