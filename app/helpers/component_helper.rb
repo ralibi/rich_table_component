@@ -226,6 +226,22 @@ module ComponentHelper
     result.html_safe
   end
 
+  def error_message_list errors
+    result = ""
+    if errors.present?
+      result += ' <div class="alert alert-error">'
+      result += '   <ul>'
+      errors.each do |k, v|
+        result += '     <li>'
+        result += t(k.to_s.split('.').join('_')) + ' ' + v
+        result += '     </li>'
+      end
+      result += '   </ul>'
+      result += ' </div>'
+    end
+    result.html_safe
+  end
+
 end
 
 
