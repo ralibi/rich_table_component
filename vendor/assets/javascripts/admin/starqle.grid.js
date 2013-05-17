@@ -688,7 +688,7 @@ var initManualPopover = function(){
   // $('body').popover({
   //   selector: '[rel=popover], [rel=popover nofollow]'
   // });
-  $("[rel=popover]").popover({ trigger: 'manual' }).hover(function(e){ 
+  $("[rel=popover]").popover({ trigger: 'manual', html: 'true' }).hover(function(e){ 
     $("[rel=popover]").not(this).popover('hide');
     $(this).popover('show');
     e.preventDefault(); 
