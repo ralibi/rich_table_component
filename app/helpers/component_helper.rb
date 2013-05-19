@@ -192,7 +192,7 @@ module ComponentHelper
   end
 
   def row_number local_var_assignments
-    counter = local_var_assignments["#{local_var_assignments[:rtc_partial]}_counter".to_sym].presence || 0
+    counter = local_var_assignments["#{local_var_assignments[:rtc_partial].split('/').last}_counter".to_sym].presence || 0
     offset = local_var_assignments[:offset]
     result = '<td class="numeric rtc_row_number">'
     if offset
