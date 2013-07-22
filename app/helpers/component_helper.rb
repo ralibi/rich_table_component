@@ -94,24 +94,30 @@ module ComponentHelper
   end
 
   def button_edit_with_cancan(obj, opts = {})
-    can?(:edit, obj) ? button_edit(obj, opts).html_safe : ''
+    can?(:update, obj) ? button_edit(obj, opts).html_safe : ''
   end
 
   def button_delete_with_cancan(obj, opts = {})
-    can?(:delete, obj) ? button_delete(obj, opts).html_safe : ''
+    can?(:destroy, obj) ? button_delete(obj, opts).html_safe : ''
   end
 
   def button_edit_delete_with_cancan(obj, opts = {})
     [button_edit_with_cancan(obj, opts), button_delete_with_cancan(obj, opts)].join(' ').strip.html_safe
   end
 
-
+  def code_with_name(code, name, row = 1)
+    if row == 2
+      "<strong>#{code}</strong><br/>#{name}".html_safe
+    else
+      "<strong>#{code}:</strong> #{name}".html_safe
+    end
+  end
 
   def uneditable_input_control(value, label = ' ')
     content_tag :div, class: "control-group" do
       content_tag(:label, label, class: "control-label") +
       content_tag(:div, class: "controls") do
-        content_tag(:div, value, class: "uneditable-input input-xlarge") 
+        content_tag(:div, value, class: "uneditable-input-plain") 
       end
     end
   end
@@ -121,7 +127,7 @@ module ComponentHelper
     content_tag :div, class: "control-group" do
       content_tag(:label, label, class: "control-label") +
       content_tag(:div, class: "controls") do
-        content_tag(:div, value, class: "uneditable-textarea input-xlarge") 
+        content_tag(:div, value, class: "uneditable-textarea-plain") 
       end
     end
   end
