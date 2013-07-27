@@ -526,6 +526,12 @@ module RichTableComponent
           if params[:pgos].eql?('true')
             format.js { render 'index', formats: [:js] }
             format.xls { render 'index' }
+            format.pdf {
+               render pdf: "#{controller_name}",
+                  template: lookup_context.exists?("#{controller_path}/index") ? "#{controller_path}/index" : "application/index",
+                  layout: 'print/pdf.html',  # for pdf.html.erb
+                  disposition: 'attachment'
+            }
           elsif params[:recapitulation].eql?('true')
             if params[:group_row].present? || params[:group_col].present?
               generate_recapitulation
