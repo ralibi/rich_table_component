@@ -43,5 +43,12 @@ $(function(){
   removeGlobalLoading();
   renderJqueryFileUpload();
   resetNestedFieldDestroy();
+  
+  $(
+      '.in_row_edit'
+    ).live("ajax:before", function(){
+    $(this).parents('tr').last().addClass('lvr_entry_edited');
+  });
+    
 });
 
