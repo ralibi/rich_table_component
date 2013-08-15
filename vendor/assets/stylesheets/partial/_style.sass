@@ -678,8 +678,6 @@ a[rel=popover]
 
 
 
-
-
 .uneditable-input, .uneditable-textarea
   > .part
     font-size: $main_font_size
@@ -692,6 +690,8 @@ a[rel=popover]
     .part_value
       > i
         color: darken($thin_color, 30%)
+
+
 
 
 
@@ -710,3 +710,138 @@ a[rel=popover]
     font-weight: bold
     color: #3A87AD
 
+
+
+
+
+
+.data_edit
+  float: right
+  position: relative
+  top: -40px
+
+
+.dropdown .large_caret
+  border-left: 12px solid transparent
+  border-right: 12px solid transparent
+  border-top: 12px solid #000000
+  margin-top: 12px
+
+
+
+
+
+
+
+.uneditable-input-plain, .uneditable-textarea-plain
+  padding-top: 3px
+.form-horizontal
+  .control-group
+    margin-bottom: 10px
+  .controls 
+    margin-left: 155px
+  .control-label
+    font-weight: bold
+    width: 140px
+
+
+.form-horizontal
+  fieldset
+    > .control-group, > .range_input
+      border-bottom: 1px solid #F0F0F0
+      margin-bottom: 0px
+      padding-bottom: 5px
+      padding-top: 5px
+    > .control-group:nth-child(even), > .range_input:nth-child(even)
+      background-color: #F8F8F8
+
+
+.form-horizontal
+  > .control-group, > .range_input
+    border-bottom: 1px solid #F0F0F0
+    margin-bottom: 0px
+    padding-bottom: 5px
+    padding-top: 5px
+  > .control-group:nth-child(even), > .range_input:nth-child(even)
+    background-color: #F8F8F8
+
+
+
+.modal .form-horizontal
+  fieldset
+    > .control-group, > .range_input
+      border-bottom: 1px solid #F0F0F0
+      margin-bottom: 0px
+      padding-bottom: 5px
+      padding-top: 5px
+    > .control-group:nth-child(even), > .range_input:nth-child(even)
+      background-color: #F8F8F8
+
+
+.modal .form-horizontal
+  > .control-group, > .range_input
+    border-bottom: 1px solid #F0F0F0
+    margin-bottom: 0px
+    padding-bottom: 5px
+    padding-top: 5px
+  > .control-group:nth-child(even), > .range_input:nth-child(even)
+    background-color: #F8F8F8
+
+
+
+#header_region
+  .navbar
+    .container
+      .dropdown
+        a
+          img
+            margin: -5px 2px -2px
+
+      .divider-vertical
+        margin: 0px
+
+
+      .role_dropdown
+        > a
+          
+
+
+legend
+  background-color: mix($second_color, white, 15%)
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+
+
+.component
+  clear: both
+.component-content  
+  overflow: hidden
+
+
+.component_title_with_avatar
+  margin-left: 120px
+  .avatar
+    padding-top: 20px
+    float: left
+    margin-left: -120px
+
+
+.accordion
+  .accordion-heading
+    > a
+      display: block
+      padding: 3px 10px
+  .accordion-body
+    .accordion-inner
+      > table
+        width: 100%
+        tr
+          td
+            padding: 2px 5px
+          &:nth-child(odd)
+            background-color: #F8F8F8
+
+.rich_table_component .component_content .rtc_header .rtc_header_expanded .rtc_advanced_search.form-horizontal .control-group, .static_table_component .component_content .rtc_header .rtc_header_expanded .rtc_advanced_search.form-horizontal .control-group
+  margin-bottom: 0px
