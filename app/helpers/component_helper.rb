@@ -68,11 +68,11 @@ module ComponentHelper
 
 
 
-  def button_form_actions(fobj)
+  def button_form_actions(fobj, txt = 'Simpan', cls = 'btn btn-large btn-primary btn_submit')
     result = ''
     # result << (fobj.error :base).presence || ''
     result << '<div class="form-actions">'
-    result << (fobj.button :submit, 'Simpan', class: 'btn btn-large btn-primary btn_submit')
+    result << (fobj.button :submit, txt, class: cls)
     result << '</div>'
     result.html_safe
   end
