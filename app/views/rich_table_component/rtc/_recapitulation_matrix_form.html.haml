@@ -1,9 +1,11 @@
 - rm_operation ||= nil
+- rm_scope ||= nil
 
 - @q = recapitulation_model.tableize.classify.constantize.search(params[:q])
 = simple_form_for @q, url: {controller: recapitulation_model.tableize, action: 'index'}, html: {method: :get, class: 'form-horizontal recapitulation_form'}, remote: true do |f|
 
   = hidden_field_tag 'recapitulation', true
+  = hidden_field_tag 'scope', rm_scope
 
   .control-group.select.optional
     %label.select.optional.control-label{for: 'group_row'}= t('row')

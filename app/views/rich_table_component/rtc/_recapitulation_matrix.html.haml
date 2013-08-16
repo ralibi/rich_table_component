@@ -1,8 +1,10 @@
 - rtc_controller_name ||= controller_name
 - rtc_class_name ||= instance_variable_get("@#{rtc_controller_name}").klass.name
 - recapitulation_model ||= rtc_class_name
+- operation ||= nil
 - recapitulation_matrix ||= nil
 - advanced_search_attributes ||= nil
+- scope ||= nil
 
 - items = []
 - recapitulation_matrix.each do |item|
@@ -23,5 +25,7 @@
 
   = render "rich_table_component/rtc/recapitulation_matrix_form",  
     recapitulation_model: recapitulation_model,
+    rm_operation: operation,
+    rm_scope: scope,
     items: items,
     advanced_search_attributes: advanced_search_attributes.presence || nil

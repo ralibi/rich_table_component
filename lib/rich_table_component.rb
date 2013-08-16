@@ -307,11 +307,21 @@ module RichTableComponent
         end
 
 
+        if on_operation?
+          gd_opr = get_group_data(params[:operation_value], recapitulation_model)
+        else
+          gd_opr = {splitter: []}
+        end
+
         #puts 'JOIN TABLE'
         q_join_table = recapitulation_model
                       .joins{gd_row[:splitter].inject((gd_row[:splitter].present? ? self : nil), :__send__)}
                       .joins{gd_col[:splitter].inject((gd_col[:splitter].present? ? self : nil), :__send__)}
+                      .joins{gd_opr[:splitter].inject((gd_opr[:splitter].present? ? self : nil), :__send__)}
 
+        if params[:scope].present?
+          q_join_table = q_join_table.send(params[:scope].to_sym)
+        end
 
         #puts 'CONVERT PRESENT QUEUE'
         if params[:q].present?
@@ -335,7 +345,13 @@ module RichTableComponent
           # contruct operation_value
           gd_ov = get_group_data(params[:operation_value], recapitulation_model)
 
-          recapitulations_operation = join_table.sum(gd_ov[:group_db], group: [gd_row[:group_db], gd_col[:group_db]].compact)
+          if params[:operation_type].eql?('maximum')
+            recapitulations_operation = join_table.maximum(gd_ov[:group_db], group: [gd_row[:group_db], gd_col[:group_db]].compact)
+          elsif params[:operation_type].eql?('minimum')
+            recapitulations_operation = join_table.minimum(gd_ov[:group_db], group: [gd_row[:group_db], gd_col[:group_db]].compact)
+          else
+            recapitulations_operation = join_table.sum(gd_ov[:group_db], group: [gd_row[:group_db], gd_col[:group_db]].compact)
+          end
         end
 
         # END DATA FETCHING
@@ -400,6 +416,8 @@ module RichTableComponent
 
         # iterate through rows and summing up matrix value simultanously
         # rows -> label top-bottom
+
+
         rows.each_with_index do |row, i|
 
           # assign label for each row
@@ -415,20 +433,59 @@ module RichTableComponent
               @recapitulation_matrix_data_operation << []
               @total_each_row_operation << 0
             end
+
+
             cols.each_with_index do |col, j|
               key_col = (col.id.present? ? col.id : col.try(as_group_col_db))
+
               cell = recapitulations[[key_row, key_col]].presence || 0
               @recapitulation_matrix_data[i] << cell 
+
               @total_each_row[i] += cell 
               @total_each_col[j] += cell
+
 
               if on_operation?
                 cell_operation = (recapitulations_operation[[key_row, key_col]].presence || 0).to_f
                 @recapitulation_matrix_data_operation[i] << cell_operation
+
                 @total_each_row_operation[i] += cell_operation 
                 @total_each_col_operation[j] += cell_operation
+
+                if ['maximum'].include? params[:operation_type]
+
+                elsif ['minimum'].include? params[:operation_type]
+
+                end
               end
             end
+
+            @total_each_row[i] = @recapitulation_matrix_data[i].compact.inject(0, :+)
+            cols.each_with_index do |col, j|
+              @total_each_col[j] = @recapitulation_matrix_data.collect{|r| r[j]}.compact.inject(0, :+)
+            end
+
+
+            if on_operation?
+              if ['maximum'].include? params[:operation_type]
+                @total_each_row_operation[i] = @recapitulation_matrix_data_operation[i].compact.max
+                cols.each_with_index do |col, j|
+                  @total_each_col_operation[j] = @recapitulation_matrix_data_operation.collect{|r| r[j]}.compact.max
+                end
+              elsif ['minimum'].include? params[:operation_type]
+                @total_each_row_operation[i] = @recapitulation_matrix_data_operation[i].compact.min
+                cols.each_with_index do |col, j|
+                  @total_each_col_operation[j] = @recapitulation_matrix_data_operation.collect{|r| r[j]}.compact.min
+                end
+              else
+                @total_each_row_operation[i] = @recapitulation_matrix_data_operation[i].compact.inject(0, :+)
+                cols.each_with_index do |col, j|
+                  @total_each_col_operation[j] = @recapitulation_matrix_data_operation.collect{|r| r[j]}.compact.inject(0, :+)
+                end
+              end
+            end
+
+
           else
             # 1-dimension
             cell = recapitulations[key_row].presence || 0
@@ -436,16 +493,33 @@ module RichTableComponent
             @total_each_row << cell 
 
             @total_each_col = [@total_each_row.inject(0, :+)]
+
+
             @label_col = [t('subtotal')]
 
             if on_operation?
               cell_operation = (recapitulations_operation[key_row].presence || 0).to_f
               @recapitulation_matrix_data_operation << [cell_operation]
               @total_each_row_operation << cell_operation 
-              @total_each_col_operation = [@total_each_row_operation.inject(0, :+)]
+
+
+              if ['maximum'].include? params[:operation_type]
+                @total_each_col_operation = [@total_each_row_operation.max]
+              elsif ['minimum'].include? params[:operation_type]
+                @total_each_col_operation = [@total_each_row_operation.min]
+              else
+                @total_each_col_operation = [@total_each_row_operation.inject(0, :+)]
+              end
+              
             end
             
           end
+
+
+
+
+
+
 
           #  
           @recapitulation_matrix = []
@@ -466,12 +540,33 @@ module RichTableComponent
             end
             @recapitulation_matrix_operation << (Array.new(@total_each_col_operation))
             @recapitulation_matrix_operation.each_with_index do |rmwt, index|
-              rmwt << (rmwt.inject(0, :+))
+
+              
+              if ['maximum'].include? params[:operation_type]
+                rmwt << (rmwt.max)
+              elsif ['minimum'].include? params[:operation_type]
+                rmwt << (rmwt.min)
+              else
+                rmwt << (rmwt.inject(0, :+))
+              end
             end
 
 
             # calculate matrix data content
-            if params[:operation_type] == 'sum'
+
+            if ['sum'].include? params[:operation_type]
+              @recapitulation_matrix_operation.each_with_index do |rmoi, i|
+                rmoi.each_with_index do |rmoj, j|
+                  @recapitulation_matrix[i + 1][j + 1] = @recapitulation_matrix_operation[i][j]
+                end
+              end
+            elsif ['maximum'].include? params[:operation_type]
+              @recapitulation_matrix_operation.each_with_index do |rmoi, i|
+                rmoi.each_with_index do |rmoj, j|
+                  @recapitulation_matrix[i + 1][j + 1] = @recapitulation_matrix_operation[i][j]
+                end
+              end
+            elsif ['minimum'].include? params[:operation_type]
               @recapitulation_matrix_operation.each_with_index do |rmoi, i|
                 rmoi.each_with_index do |rmoj, j|
                   @recapitulation_matrix[i + 1][j + 1] = @recapitulation_matrix_operation[i][j]
